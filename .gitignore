@@ -1,0 +1,21 @@
+# VaaniX — local artifacts (never commit secrets or full dataset dumps)
+.venv/
+__pycache__/
+*.py[cod]
+.env
+.env.*
+!.env.example
+.DS_Store
+data/cache/
+data/raw/
+data/clean/
+data/indexes/
+*.parquet
+.huggingface/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+node_modules/
+dist/
+build/
+*.egg-info/

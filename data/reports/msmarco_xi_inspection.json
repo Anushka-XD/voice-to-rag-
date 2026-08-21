@@ -1,0 +1,1993 @@
+{
+  "dataset_id": "ai4bharat/MSMARCO-XI",
+  "huggingface_url": "https://huggingface.co/datasets/ai4bharat/MSMARCO-XI",
+  "inspection_method": "Streamed real parquet shards via hf://datasets/... (not README assumptions)",
+  "hf_configs": [
+    "default"
+  ],
+  "shards": {
+    "train_shards": {
+      "as": "train/asmtrain.parquet",
+      "bn": "train/bentrain.parquet",
+      "gu": "train/gujtrain.parquet",
+      "hi": "train/hintrain.parquet",
+      "kn": "train/kantrain.parquet",
+      "ml": "train/maltrain.parquet",
+      "mr": "train/martrain.parquet",
+      "ne": "train/neptrain.parquet",
+      "or": "train/oritrain.parquet",
+      "pa": "train/pantrain.parquet",
+      "sa": "train/santrain.parquet",
+      "ta": "train/tamtrain.parquet",
+      "ur": "train/urdtrain.parquet"
+    },
+    "validation_shards": {
+      "as": "validation/asmval.parquet",
+      "bn": "validation/benval.parquet",
+      "gu": "validation/gujval.parquet",
+      "hi": "validation/hinval.parquet",
+      "kn": "validation/kanval.parquet",
+      "ml": "validation/malval.parquet",
+      "mr": "validation/marval.parquet",
+      "ne": "validation/nepval.parquet",
+      "or": "validation/orival.parquet",
+      "pa": "validation/panval.parquet",
+      "sa": "validation/sanval.parquet",
+      "ta": "validation/tamval.parquet",
+      "te": "validation/telval.parquet",
+      "ur": "validation/urdval.parquet"
+    },
+    "languages_from_filenames": [
+      "as",
+      "bn",
+      "gu",
+      "hi",
+      "kn",
+      "ml",
+      "mr",
+      "ne",
+      "or",
+      "pa",
+      "sa",
+      "ta",
+      "te",
+      "ur"
+    ],
+    "train_only": [],
+    "validation_only": [
+      "te"
+    ],
+    "unknown_parquets": [],
+    "readme_vs_hub_notes": [
+      "README still documents load_dataset(..., 'hi') but Hub only exposes config 'default'.",
+      "Prefer data_files=hf://…/{train|validation}/{stem}{train|val}.parquet.",
+      "Gujarati file stem is 'guj' (not 'gu'); Odia stem is 'ori' (not 'or').",
+      "Telugu appears in validation but may be missing from train (check validation_only)."
+    ]
+  },
+  "supported_languages_from_inspection": [
+    "as",
+    "bn",
+    "gu",
+    "hi",
+    "kn",
+    "ml",
+    "mr",
+    "ne",
+    "or",
+    "pa",
+    "sa",
+    "ta",
+    "te",
+    "ur"
+  ],
+  "flores_target_langs_observed": {
+    "hin_Deva": 80,
+    "ben_Beng": 80,
+    "tam_Taml": 80
+  },
+  "schema_consensus": {
+    "common_keys_across_inspected_langs": [
+      "Answer",
+      "Eng_Answer",
+      "Eng_Query",
+      "meta",
+      "meta.frequency_penalty",
+      "meta.max_tokens",
+      "meta.model_name",
+      "meta.presence_penalty",
+      "meta.temperature",
+      "meta.top_p",
+      "passages",
+      "passages.English_passages",
+      "passages.Translated_passages",
+      "passages.is_selected",
+      "query",
+      "query_id",
+      "query_type",
+      "source_lang",
+      "target_lang"
+    ],
+    "all_keys_seen": [
+      "Answer",
+      "Eng_Answer",
+      "Eng_Query",
+      "meta",
+      "meta.frequency_penalty",
+      "meta.max_tokens",
+      "meta.model_name",
+      "meta.presence_penalty",
+      "meta.temperature",
+      "meta.top_p",
+      "passages",
+      "passages.English_passages",
+      "passages.Translated_passages",
+      "passages.is_selected",
+      "query",
+      "query_id",
+      "query_type",
+      "source_lang",
+      "target_lang"
+    ],
+    "canonical_top_level_fields": [
+      "source_lang",
+      "target_lang",
+      "meta",
+      "query",
+      "Answer",
+      "query_id",
+      "query_type",
+      "passages",
+      "Eng_Query",
+      "Eng_Answer"
+    ],
+    "passages_subfields": [
+      "is_selected",
+      "English_passages",
+      "Translated_passages"
+    ],
+    "meta_subfields": [
+      "model_name",
+      "temperature",
+      "max_tokens",
+      "top_p",
+      "frequency_penalty",
+      "presence_penalty"
+    ],
+    "no_document_id_field": true,
+    "answer_field_casing": "Answer (capital A) — not 'answers' or 'answer'",
+    "parquet_type_notes": "In parquet, meta numeric fields may be int64 (temperature/top_p stored as 0/1) even though the old builder script declared float32."
+  },
+  "query_types_observed": {
+    "DESCRIPTION": 141,
+    "NUMERIC": 81,
+    "ENTITY": 15,
+    "LOCATION": 3
+  },
+  "cross_lingual": {
+    "query_language_neq_document_language": true,
+    "fields": {
+      "indic_query": "query",
+      "english_query": "Eng_Query",
+      "indic_passages": "passages.Translated_passages",
+      "english_passages": "passages.English_passages",
+      "indic_answer": "Answer",
+      "english_answer": "Eng_Answer"
+    },
+    "design": {
+      "unified_index": "Embed en + Indic passages with one multilingual encoder",
+      "per_language_bm25": "Separate lexical indexes per script/language",
+      "answer_language": "User query language (detected), independent of evidence language"
+    }
+  },
+  "per_language": {
+    "hi": {
+      "lang_code": "hi",
+      "split": "validation",
+      "repo_path": "validation/hinval.parquet",
+      "samples_inspected": 80,
+      "features_repr": "{'source_lang': Value('string'), 'target_lang': Value('string'), 'meta': {'frequency_penalty': Value('int64'), 'max_tokens': Value('int64'), 'model_name': Value('string'), 'presence_penalty': Value('int64'), 'temperature': Value('int64'), 'top_p': Value('int64')}, 'Answer': Value('string'), 'query_id': Value('int64'), 'query_type': Value('string'), 'passages': {'English_passages': List(Value('string')), 'Translated_passages': List(Value('string')), 'is_selected': List(Value('int64'))}, 'Eng_Query': Value('string'), 'Eng_Answer': Value('string'), 'query': Value('string')}",
+      "top_level_and_nested_keys": [
+        "Answer",
+        "Eng_Answer",
+        "Eng_Query",
+        "meta",
+        "meta.frequency_penalty",
+        "meta.max_tokens",
+        "meta.model_name",
+        "meta.presence_penalty",
+        "meta.temperature",
+        "meta.top_p",
+        "passages",
+        "passages.English_passages",
+        "passages.Translated_passages",
+        "passages.is_selected",
+        "query",
+        "query_id",
+        "query_type",
+        "source_lang",
+        "target_lang"
+      ],
+      "field_presence": {
+        "Answer": {
+          "present": 80,
+          "missing_or_empty": 0,
+          "types": {
+            "str": 80
+          },
+          "samples": [
+            "निगम एक कंपनी या लोगों का समूह होता है जो एक एकल इकाई के रूप में कार्य करने के लिए अधिकृत होता है और कानून में इस प्रकार से मान्यता प्राप्त होती है।",
+            "रेचल कार्सन ने लिखा है कि \"द ओब्लिगेशन टू एंड्योर\" क्योंकि उनका मानना है कि जैसे-जैसे आदमी अवांछित कीड़ों और खरपतवारों को खत्म करने की कोशिश करता है, वैसे-वैसे …"
+          ]
+        },
+        "Eng_Answer": {
+          "present": 80,
+          "missing_or_empty": 1,
+          "types": {
+            "str": 80
+          },
+          "samples": [
+            "A corporation is a company or group of people authorized to act as a single entity and recognized as such in law.",
+            "Rachel Carson writes The Obligation to Endure because believes that as man tries to eliminate unwanted insects and weeds, however he is actually causing more pr…"
+          ]
+        },
+        "Eng_Query": {
+          "present": 80,
+          "missing_or_empty": 0,
+          "types": {
+            "str": 80
+          },
+          "samples": [
+            ". what is a corporation?",
+            "why did rachel carson write an obligation to endure"
+          ]
+        },
+        "meta": {
+          "present": 80,
+          "missing_or_empty": 0,
+          "types": {
+            "dict": 80
+          },
+          "samples": [
+            {
+              "frequency_penalty": 0,
+              "max_tokens": 4096,
+              "model_name": "ckpt-3epochs-sft-then-400k-kd",
+              "presence_penalty": 0,
+              "temperature": 0,
+              "top_p": 1
+            },
+            {
+              "frequency_penalty": 0,
+              "max_tokens": 4096,
+              "model_name": "ckpt-3epochs-sft-then-400k-kd",
+              "presence_penalty": 0,
+              "temperature": 0,
+              "top_p": 1
+            }
+          ]
+        },
+        "passages": {
+          "present": 80,
+          "missing_or_empty": 0,
+          "types": {
+            "dict": 80
+          },
+          "samples": [
+            {
+              "English_passages": {
+                "list_len": 10,
+                "first": "A company is incorporated in a specific nation, often within the bounds of a smaller subset of that nation, such as a state or province. The corporation is then…",
+                "elem_type": "str"
+              },
+              "Translated_passages": {
+                "list_len": 10,
+                "first": "एक कंपनी एक विशिष्ट देश में निगमित होती है, अक्सर उस देश के एक छोटे उपसमूह, जैसे कि एक राज्य या प्रांत, की सीमाओं के भीतर। निगम तब उस राज्य में निगमन के कानूनों…",
+                "elem_type": "str"
+              },
+              "is_selected": {
+                "list_len": 10,
+                "first": 0,
+                "elem_type": "int"
+              }
+            },
+            {
+              "English_passages": {
+                "list_len": 10,
+                "first": "Read to write - grow a love of books (even if it's a comic book) Organizing an argument into paragraphs, words [that] worked together for a common purpose Walke…",
+                "elem_type": "str"
+              },
+              "Translated_passages": {
+                "list_len": 10,
+                "first": "पढ़ने के लिए - पुस्तकों के प्रति प्रेम विकसित करें (भले ही यह एक कॉमिक पुस्तक हो) एक तर्क को अनुच्छेदों में व्यवस्थित करें, शब्दों [जो] एक सामान्य उद्देश्य के ल…",
+                "elem_type": "str"
+              },
+              "is_selected": {
+                "list_len": 10,
+                "first": 0,
+                "elem_type": "int"
+              }
+            }
+          ]
+        },
+        "passages.English_passages": {
+          "present": 80,
+          "missing_or_empty": 0,
+          "types": {
+            "list": 80
+          },
+          "samples": []
+        },
+        "passages.Translated_passages": {
+          "present": 80,
+          "missing_or_empty": 0,
+          "types": {
+            "list": 80
+          },
+          "samples": []
+        },
+        "passages.is_selected": {
+          "present": 80,
+          "missing_or_empty": 0,
+          "types": {
+            "list": 80
+          },
+          "samples": []
+        },
+        "query": {
+          "present": 80,
+          "missing_or_empty": 0,
+          "types": {
+            "str": 80
+          },
+          "samples": [
+            "कॉर्पोरेशन क्या है?",
+            "रेचल कार्सन ने क्यों एक दायित्व बर्दाश्त करने के लिए लिखा"
+          ]
+        },
+        "query_id": {
+          "present": 80,
+          "missing_or_empty": 0,
+          "types": {
+            "int": 80
+          },
+          "samples": [
+            1102432,
+            1102431
+          ]
+        },
+        "query_type": {
+          "present": 80,
+          "missing_or_empty": 0,
+          "types": {
+            "str": 80
+          },
+          "samples": [
+            "DESCRIPTION",
+            "DESCRIPTION"
+          ]
+        },
+        "source_lang": {
+          "present": 80,
+          "missing_or_empty": 0,
+          "types": {
+            "str": 80
+          },
+          "samples": [
+            "eng_Latn",
+            "eng_Latn"
+          ]
+        },
+        "target_lang": {
+          "present": 80,
+          "missing_or_empty": 0,
+          "types": {
+            "str": 80
+          },
+          "samples": [
+            "hin_Deva",
+            "hin_Deva"
+          ]
+        }
+      },
+      "languages": {
+        "source_lang_counts": {
+          "eng_Latn": 80
+        },
+        "target_lang_counts": {
+          "hin_Deva": 80
+        }
+      },
+      "query_types": {
+        "DESCRIPTION": 47,
+        "NUMERIC": 27,
+        "ENTITY": 5,
+        "LOCATION": 1
+      },
+      "query_ids": {
+        "unique": 80,
+        "duplicate_in_sample": 0,
+        "min": 9671,
+        "max": 1102432,
+        "note": "query_id is the MS MARCO query id. There is NO document_id field; derive passage ids as f'{query_id}:{passage_index}:{lang}'."
+      },
+      "data_quality": {
+        "passage_list_length_mismatches": 0,
+        "empty_Answer": 0,
+        "empty_Eng_Answer": 1,
+        "Eng_Query_leading_punctuation": 1,
+        "Eng_Query_leading_punct_pct": 1.25
+      },
+      "passages": {
+        "count_per_example": {
+          "min": 7,
+          "max": 10,
+          "mean": 9.96,
+          "mode": 10
+        },
+        "selected_relevant_per_example": {
+          "min": 0,
+          "max": 2,
+          "mean": 0.562,
+          "rows_with_ge1_selected": 41,
+          "rows_with_0_selected": 39,
+          "rows_with_gt1_selected": 4
+        },
+        "english_passage_lengths": {
+          "n": 797,
+          "chars": {
+            "min": 55.0,
+            "p50": 293.0,
+            "p90": 464.0,
+            "p99": 637.0,
+            "max": 851.0,
+            "mean": 310.03
+          },
+          "words": {
+            "min": 9.0,
+            "p50": 50.0,
+            "p90": 77.0,
+            "p99": 112.0,
+            "max": 150.0,
+            "mean": 52.86
+          },
+          "sentences": {
+            "min": 1.0,
+            "p50": 3.0,
+            "p90": 6.0,
+            "p99": 10.0,
+            "max": 17.0,
+            "mean": 3.49
+          },
+          "paragraphs": {
+            "min": 1.0,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0,
+            "mean": 1.0
+          },
+          "multi_sentence_pct": 88.71,
+          "multi_paragraph_pct": 0.0
+        },
+        "translated_passage_lengths": {
+          "n": 797,
+          "chars": {
+            "min": 53.0,
+            "p50": 293.0,
+            "p90": 443.0,
+            "p99": 656.0,
+            "max": 7515.0,
+            "mean": 315.4
+          },
+          "words": {
+            "min": 11.0,
+            "p50": 56.0,
+            "p90": 86.0,
+            "p99": 124.0,
+            "max": 1421.0,
+            "mean": 60.65
+          },
+          "sentences": {
+            "min": 1.0,
+            "p50": 3.0,
+            "p90": 6.0,
+            "p99": 10.0,
+            "max": 17.0,
+            "mean": 3.52
+          },
+          "paragraphs": {
+            "min": 1.0,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 2.0,
+            "mean": 1.0
+          },
+          "multi_sentence_pct": 89.34,
+          "multi_paragraph_pct": 0.13
+        },
+        "duplicate_passages_in_sample": {
+          "english_extra_copies": 1,
+          "translated_extra_copies": 1,
+          "unique_english": 796,
+          "unique_translated": 796
+        },
+        "document_id": "ABSENT — synthesize from query_id + passage index + language tag"
+      },
+      "text_lengths": {
+        "query": {
+          "n": 80,
+          "chars": {
+            "min": 9.0,
+            "p50": 36.0,
+            "p90": 53.0,
+            "p99": 67.0,
+            "max": 67.0,
+            "mean": 35.76
+          },
+          "words": {
+            "min": 2.0,
+            "p50": 6.0,
+            "p90": 11.0,
+            "p99": 14.0,
+            "max": 14.0,
+            "mean": 6.83
+          },
+          "sentences": {
+            "min": 1.0,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 2.0,
+            "max": 2.0,
+            "mean": 1.02
+          },
+          "paragraphs": {
+            "min": 1.0,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0,
+            "mean": 1.0
+          },
+          "multi_sentence_pct": 2.5,
+          "multi_paragraph_pct": 0.0
+        },
+        "Answer": {
+          "n": 80,
+          "chars": {
+            "min": 6.0,
+            "p50": 20.0,
+            "p90": 221.0,
+            "p99": 7515.0,
+            "max": 7515.0,
+            "mean": 159.03
+          },
+          "words": {
+            "min": 2.0,
+            "p50": 4.0,
+            "p90": 34.0,
+            "p99": 2011.0,
+            "max": 2011.0,
+            "mean": 37.59
+          },
+          "sentences": {
+            "min": 1.0,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 11.0,
+            "max": 11.0,
+            "mean": 1.25
+          },
+          "paragraphs": {
+            "min": 1.0,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0,
+            "mean": 1.0
+          },
+          "multi_sentence_pct": 8.75,
+          "multi_paragraph_pct": 0.0
+        },
+        "Eng_Query": {
+          "n": 80,
+          "chars": {
+            "min": 8.0,
+            "p50": 31.0,
+            "p90": 45.0,
+            "p99": 63.0,
+            "max": 63.0,
+            "mean": 31.64
+          },
+          "words": {
+            "min": 2.0,
+            "p50": 6.0,
+            "p90": 8.0,
+            "p99": 9.0,
+            "max": 9.0,
+            "mean": 5.54
+          },
+          "sentences": {
+            "min": 1.0,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 2.0,
+            "max": 2.0,
+            "mean": 1.02
+          },
+          "paragraphs": {
+            "min": 1.0,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0,
+            "mean": 1.0
+          },
+          "multi_sentence_pct": 2.5,
+          "multi_paragraph_pct": 0.0
+        },
+        "Eng_Answer": {
+          "n": 79,
+          "chars": {
+            "min": 2.0,
+            "p50": 18.0,
+            "p90": 189.0,
+            "p99": 406.0,
+            "max": 406.0,
+            "mean": 62.73
+          },
+          "words": {
+            "min": 1.0,
+            "p50": 3.0,
+            "p90": 27.0,
+            "p99": 82.0,
+            "max": 82.0,
+            "mean": 10.72
+          },
+          "sentences": {
+            "min": 1.0,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 11.0,
+            "max": 11.0,
+            "mean": 1.27
+          },
+          "paragraphs": {
+            "min": 1.0,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0,
+            "mean": 1.0
+          },
+          "multi_sentence_pct": 7.59,
+          "multi_paragraph_pct": 0.0
+        }
+      },
+      "chunking_implications": {
+        "base_unit": "Each entry in English_passages / Translated_passages",
+        "multi_sentence_english_passages_pct": 88.71,
+        "multi_paragraph_english_passages_pct": 0.0,
+        "recommendation": "Index passage-level docs first. Structure-aware chunking further splits by sentence/paragraph when multi_sentence_pct is high; semantic and sliding-window chunkers operate on sentence sequences within a passage."
+      },
+      "evaluation_implications": {
+        "gold_labels": "passages.is_selected[i] == 1 marks gold-relevant passage i",
+        "cross_lingual": "Same row has Eng_Query + English_passages and query + Translated_passages; supports Indic-query→English-evidence and reverse setups.",
+        "answer_fields": "Answer (Indic) and Eng_Answer (English)",
+        "caveat": "Each example is a ~10-passage candidate pool, not a global corpus. For corpus-level RAG, flatten unique passages across queries; for in-pool ranking metrics, rank within the 10 candidates."
+      },
+      "sample_examples": [
+        {
+          "query_id": 1102432,
+          "query_type": "DESCRIPTION",
+          "source_lang": "eng_Latn",
+          "target_lang": "hin_Deva",
+          "query": "कॉर्पोरेशन क्या है?",
+          "Answer": "निगम एक कंपनी या लोगों का समूह होता है जो एक एकल इकाई के रूप में कार्य करने के लिए अधिकृत होता है और कानून में इस प्रकार से मान्यता प्राप्त होती है।",
+          "Eng_Query": ". what is a corporation?",
+          "Eng_Answer": "A corporation is a company or group of people authorized to act as a single entity and recognized as such in law.",
+          "meta": {
+            "frequency_penalty": 0,
+            "max_tokens": 4096,
+            "model_name": "ckpt-3epochs-sft-then-400k-kd",
+            "presence_penalty": 0,
+            "temperature": 0,
+            "top_p": 1
+          },
+          "passages": {
+            "English_passages": {
+              "list_len": 10,
+              "first": "A company is incorporated in a specific nation, often within the bounds of a smaller subset of that nation, such as a state or province. The corporation is then…",
+              "elem_type": "str"
+            },
+            "Translated_passages": {
+              "list_len": 10,
+              "first": "एक कंपनी एक विशिष्ट देश में निगमित होती है, अक्सर उस देश के एक छोटे उपसमूह, जैसे कि एक राज्य या प्रांत, की सीमाओं के भीतर। निगम तब उस राज्य में निगमन के कानूनों…",
+              "elem_type": "str"
+            },
+            "is_selected": {
+              "list_len": 10,
+              "first": 0,
+              "elem_type": "int"
+            }
+          },
+          "top_level_keys": [
+            "Answer",
+            "Eng_Answer",
+            "Eng_Query",
+            "meta",
+            "passages",
+            "query",
+            "query_id",
+            "query_type",
+            "source_lang",
+            "target_lang"
+          ]
+        },
+        {
+          "query_id": 1102431,
+          "query_type": "DESCRIPTION",
+          "source_lang": "eng_Latn",
+          "target_lang": "hin_Deva",
+          "query": "रेचल कार्सन ने क्यों एक दायित्व बर्दाश्त करने के लिए लिखा",
+          "Answer": "रेचल कार्सन ने लिखा है कि \"द ओब्लिगेशन टू एंड्योर\" क्योंकि उनका मानना है कि जैसे-जैसे आदमी अवांछित कीड़ों और खरपतवारों को खत्म करने की कोशिश करता है, वैसे-वैसे …",
+          "Eng_Query": "why did rachel carson write an obligation to endure",
+          "Eng_Answer": "Rachel Carson writes The Obligation to Endure because believes that as man tries to eliminate unwanted insects and weeds, however he is actually causing more pr…",
+          "meta": {
+            "frequency_penalty": 0,
+            "max_tokens": 4096,
+            "model_name": "ckpt-3epochs-sft-then-400k-kd",
+            "presence_penalty": 0,
+            "temperature": 0,
+            "top_p": 1
+          },
+          "passages": {
+            "English_passages": {
+              "list_len": 10,
+              "first": "Read to write - grow a love of books (even if it's a comic book) Organizing an argument into paragraphs, words [that] worked together for a common purpose Walke…",
+              "elem_type": "str"
+            },
+            "Translated_passages": {
+              "list_len": 10,
+              "first": "पढ़ने के लिए - पुस्तकों के प्रति प्रेम विकसित करें (भले ही यह एक कॉमिक पुस्तक हो) एक तर्क को अनुच्छेदों में व्यवस्थित करें, शब्दों [जो] एक सामान्य उद्देश्य के ल…",
+              "elem_type": "str"
+            },
+            "is_selected": {
+              "list_len": 10,
+              "first": 0,
+              "elem_type": "int"
+            }
+          },
+          "top_level_keys": [
+            "Answer",
+            "Eng_Answer",
+            "Eng_Query",
+            "meta",
+            "passages",
+            "query",
+            "query_id",
+            "query_type",
+            "source_lang",
+            "target_lang"
+          ]
+        }
+      ],
+      "errors_or_anomalies": []
+    },
+    "bn": {
+      "lang_code": "bn",
+      "split": "validation",
+      "repo_path": "validation/benval.parquet",
+      "samples_inspected": 80,
+      "features_repr": "{'source_lang': Value('string'), 'target_lang': Value('string'), 'meta': {'frequency_penalty': Value('int64'), 'max_tokens': Value('int64'), 'model_name': Value('string'), 'presence_penalty': Value('int64'), 'temperature': Value('int64'), 'top_p': Value('int64')}, 'Answer': Value('string'), 'query_id': Value('int64'), 'query_type': Value('string'), 'passages': {'English_passages': List(Value('string')), 'Translated_passages': List(Value('string')), 'is_selected': List(Value('int64'))}, 'Eng_Query': Value('string'), 'Eng_Answer': Value('string'), 'query': Value('string')}",
+      "top_level_and_nested_keys": [
+        "Answer",
+        "Eng_Answer",
+        "Eng_Query",
+        "meta",
+        "meta.frequency_penalty",
+        "meta.max_tokens",
+        "meta.model_name",
+        "meta.presence_penalty",
+        "meta.temperature",
+        "meta.top_p",
+        "passages",
+        "passages.English_passages",
+        "passages.Translated_passages",
+        "passages.is_selected",
+        "query",
+        "query_id",
+        "query_type",
+        "source_lang",
+        "target_lang"
+      ],
+      "field_presence": {
+        "Answer": {
+          "present": 80,
+          "missing_or_empty": 0,
+          "types": {
+            "str": 80
+          },
+          "samples": [
+            "একটি কর্পোরেশন হল একটি সংস্থা বা মানুষের একটি গোষ্ঠী যা একক সত্তা হিসাবে কাজ করার জন্য এবং আইনে স্বীকৃত।",
+            "র‍্যাচেল কারসন দ্য অব্লিগেশন টু এন্ডিউর লিখেছেন কারণ তিনি বিশ্বাস করেন যে মানুষ অবাঞ্ছিত পোকামাকড় এবং আগাছা নির্মূল করার চেষ্টা করলেও তিনি পরিবেশকে দূষিত করে আ…"
+          ]
+        },
+        "Eng_Answer": {
+          "present": 80,
+          "missing_or_empty": 1,
+          "types": {
+            "str": 80
+          },
+          "samples": [
+            "A corporation is a company or group of people authorized to act as a single entity and recognized as such in law.",
+            "Rachel Carson writes The Obligation to Endure because believes that as man tries to eliminate unwanted insects and weeds, however he is actually causing more pr…"
+          ]
+        },
+        "Eng_Query": {
+          "present": 80,
+          "missing_or_empty": 0,
+          "types": {
+            "str": 80
+          },
+          "samples": [
+            ". what is a corporation?",
+            "why did rachel carson write an obligation to endure"
+          ]
+        },
+        "meta": {
+          "present": 80,
+          "missing_or_empty": 0,
+          "types": {
+            "dict": 80
+          },
+          "samples": [
+            {
+              "frequency_penalty": 0,
+              "max_tokens": 4096,
+              "model_name": "ckpt-3epochs-sft-then-400k-kd",
+              "presence_penalty": 0,
+              "temperature": 0,
+              "top_p": 1
+            },
+            {
+              "frequency_penalty": 0,
+              "max_tokens": 4096,
+              "model_name": "ckpt-3epochs-sft-then-400k-kd",
+              "presence_penalty": 0,
+              "temperature": 0,
+              "top_p": 1
+            }
+          ]
+        },
+        "passages": {
+          "present": 80,
+          "missing_or_empty": 0,
+          "types": {
+            "dict": 80
+          },
+          "samples": [
+            {
+              "English_passages": {
+                "list_len": 10,
+                "first": "A company is incorporated in a specific nation, often within the bounds of a smaller subset of that nation, such as a state or province. The corporation is then…",
+                "elem_type": "str"
+              },
+              "Translated_passages": {
+                "list_len": 10,
+                "first": "একটি কোম্পানি একটি নির্দিষ্ট দেশে অন্তর্ভুক্ত করা হয়, প্রায়শই সেই দেশের একটি ছোট উপসেটের সীমার মধ্যে, যেমন একটি রাজ্য বা প্রদেশ। কর্পোরেশনটি তখন সেই রাজ্যের অ…",
+                "elem_type": "str"
+              },
+              "is_selected": {
+                "list_len": 10,
+                "first": 0,
+                "elem_type": "int"
+              }
+            },
+            {
+              "English_passages": {
+                "list_len": 10,
+                "first": "Read to write - grow a love of books (even if it's a comic book) Organizing an argument into paragraphs, words [that] worked together for a common purpose Walke…",
+                "elem_type": "str"
+              },
+              "Translated_passages": {
+                "list_len": 10,
+                "first": "পড়ার জন্য লিখুন - বইয়ের প্রতি ভালবাসা বৃদ্ধি করুন (এমনকি যদি এটি একটি কমিক বই হয়) একটি যুক্তি অনুচ্ছেদে সংগঠিত করা, শব্দ [যা] একটি সাধারণ উদ্দেশ্যে একসাথে কা…",
+                "elem_type": "str"
+              },
+              "is_selected": {
+                "list_len": 10,
+                "first": 0,
+                "elem_type": "int"
+              }
+            }
+          ]
+        },
+        "passages.English_passages": {
+          "present": 80,
+          "missing_or_empty": 0,
+          "types": {
+            "list": 80
+          },
+          "samples": []
+        },
+        "passages.Translated_passages": {
+          "present": 80,
+          "missing_or_empty": 0,
+          "types": {
+            "list": 80
+          },
+          "samples": []
+        },
+        "passages.is_selected": {
+          "present": 80,
+          "missing_or_empty": 0,
+          "types": {
+            "list": 80
+          },
+          "samples": []
+        },
+        "query": {
+          "present": 80,
+          "missing_or_empty": 0,
+          "types": {
+            "str": 80
+          },
+          "samples": [
+            "কর্পোরেশন কী?",
+            "র‍্যাচেল কারসন কেন একটি বাধ্যবাধকতা সহ্য করার জন্য লিখেছিলেন"
+          ]
+        },
+        "query_id": {
+          "present": 80,
+          "missing_or_empty": 0,
+          "types": {
+            "int": 80
+          },
+          "samples": [
+            1102432,
+            1102431
+          ]
+        },
+        "query_type": {
+          "present": 80,
+          "missing_or_empty": 0,
+          "types": {
+            "str": 80
+          },
+          "samples": [
+            "DESCRIPTION",
+            "DESCRIPTION"
+          ]
+        },
+        "source_lang": {
+          "present": 80,
+          "missing_or_empty": 0,
+          "types": {
+            "str": 80
+          },
+          "samples": [
+            "eng_Latn",
+            "eng_Latn"
+          ]
+        },
+        "target_lang": {
+          "present": 80,
+          "missing_or_empty": 0,
+          "types": {
+            "str": 80
+          },
+          "samples": [
+            "ben_Beng",
+            "ben_Beng"
+          ]
+        }
+      },
+      "languages": {
+        "source_lang_counts": {
+          "eng_Latn": 80
+        },
+        "target_lang_counts": {
+          "ben_Beng": 80
+        }
+      },
+      "query_types": {
+        "DESCRIPTION": 47,
+        "NUMERIC": 27,
+        "ENTITY": 5,
+        "LOCATION": 1
+      },
+      "query_ids": {
+        "unique": 80,
+        "duplicate_in_sample": 0,
+        "min": 9671,
+        "max": 1102432,
+        "note": "query_id is the MS MARCO query id. There is NO document_id field; derive passage ids as f'{query_id}:{passage_index}:{lang}'."
+      },
+      "data_quality": {
+        "passage_list_length_mismatches": 0,
+        "empty_Answer": 0,
+        "empty_Eng_Answer": 1,
+        "Eng_Query_leading_punctuation": 1,
+        "Eng_Query_leading_punct_pct": 1.25
+      },
+      "passages": {
+        "count_per_example": {
+          "min": 7,
+          "max": 10,
+          "mean": 9.96,
+          "mode": 10
+        },
+        "selected_relevant_per_example": {
+          "min": 0,
+          "max": 2,
+          "mean": 0.562,
+          "rows_with_ge1_selected": 41,
+          "rows_with_0_selected": 39,
+          "rows_with_gt1_selected": 4
+        },
+        "english_passage_lengths": {
+          "n": 797,
+          "chars": {
+            "min": 55.0,
+            "p50": 293.0,
+            "p90": 464.0,
+            "p99": 637.0,
+            "max": 851.0,
+            "mean": 310.03
+          },
+          "words": {
+            "min": 9.0,
+            "p50": 50.0,
+            "p90": 77.0,
+            "p99": 112.0,
+            "max": 150.0,
+            "mean": 52.86
+          },
+          "sentences": {
+            "min": 1.0,
+            "p50": 3.0,
+            "p90": 6.0,
+            "p99": 10.0,
+            "max": 17.0,
+            "mean": 3.49
+          },
+          "paragraphs": {
+            "min": 1.0,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0,
+            "mean": 1.0
+          },
+          "multi_sentence_pct": 88.71,
+          "multi_paragraph_pct": 0.0
+        },
+        "translated_passage_lengths": {
+          "n": 797,
+          "chars": {
+            "min": 54.0,
+            "p50": 288.0,
+            "p90": 434.0,
+            "p99": 663.0,
+            "max": 3718.0,
+            "mean": 307.03
+          },
+          "words": {
+            "min": 7.0,
+            "p50": 44.0,
+            "p90": 68.0,
+            "p99": 100.0,
+            "max": 560.0,
+            "mean": 47.03
+          },
+          "sentences": {
+            "min": 1.0,
+            "p50": 3.0,
+            "p90": 5.0,
+            "p99": 9.0,
+            "max": 17.0,
+            "mean": 3.24
+          },
+          "paragraphs": {
+            "min": 1.0,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0,
+            "mean": 1.0
+          },
+          "multi_sentence_pct": 86.83,
+          "multi_paragraph_pct": 0.0
+        },
+        "duplicate_passages_in_sample": {
+          "english_extra_copies": 1,
+          "translated_extra_copies": 1,
+          "unique_english": 796,
+          "unique_translated": 796
+        },
+        "document_id": "ABSENT — synthesize from query_id + passage index + language tag"
+      },
+      "text_lengths": {
+        "query": {
+          "n": 80,
+          "chars": {
+            "min": 9.0,
+            "p50": 33.0,
+            "p90": 50.0,
+            "p99": 68.0,
+            "max": 68.0,
+            "mean": 32.55
+          },
+          "words": {
+            "min": 2.0,
+            "p50": 5.0,
+            "p90": 8.0,
+            "p99": 9.0,
+            "max": 9.0,
+            "mean": 5.0
+          },
+          "sentences": {
+            "min": 1.0,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0,
+            "mean": 1.0
+          },
+          "paragraphs": {
+            "min": 1.0,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0,
+            "mean": 1.0
+          },
+          "multi_sentence_pct": 0.0,
+          "multi_paragraph_pct": 0.0
+        },
+        "Answer": {
+          "n": 80,
+          "chars": {
+            "min": 5.0,
+            "p50": 15.0,
+            "p90": 201.0,
+            "p99": 3196.0,
+            "max": 3196.0,
+            "mean": 102.15
+          },
+          "words": {
+            "min": 1.0,
+            "p50": 3.0,
+            "p90": 27.0,
+            "p99": 699.0,
+            "max": 699.0,
+            "mean": 18.62
+          },
+          "sentences": {
+            "min": 1.0,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 7.0,
+            "max": 7.0,
+            "mean": 1.19
+          },
+          "paragraphs": {
+            "min": 1.0,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0,
+            "mean": 1.0
+          },
+          "multi_sentence_pct": 8.75,
+          "multi_paragraph_pct": 0.0
+        },
+        "Eng_Query": {
+          "n": 80,
+          "chars": {
+            "min": 8.0,
+            "p50": 31.0,
+            "p90": 45.0,
+            "p99": 63.0,
+            "max": 63.0,
+            "mean": 31.64
+          },
+          "words": {
+            "min": 2.0,
+            "p50": 6.0,
+            "p90": 8.0,
+            "p99": 9.0,
+            "max": 9.0,
+            "mean": 5.54
+          },
+          "sentences": {
+            "min": 1.0,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 2.0,
+            "max": 2.0,
+            "mean": 1.02
+          },
+          "paragraphs": {
+            "min": 1.0,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0,
+            "mean": 1.0
+          },
+          "multi_sentence_pct": 2.5,
+          "multi_paragraph_pct": 0.0
+        },
+        "Eng_Answer": {
+          "n": 79,
+          "chars": {
+            "min": 2.0,
+            "p50": 18.0,
+            "p90": 189.0,
+            "p99": 406.0,
+            "max": 406.0,
+            "mean": 62.73
+          },
+          "words": {
+            "min": 1.0,
+            "p50": 3.0,
+            "p90": 27.0,
+            "p99": 82.0,
+            "max": 82.0,
+            "mean": 10.72
+          },
+          "sentences": {
+            "min": 1.0,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 11.0,
+            "max": 11.0,
+            "mean": 1.27
+          },
+          "paragraphs": {
+            "min": 1.0,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0,
+            "mean": 1.0
+          },
+          "multi_sentence_pct": 7.59,
+          "multi_paragraph_pct": 0.0
+        }
+      },
+      "chunking_implications": {
+        "base_unit": "Each entry in English_passages / Translated_passages",
+        "multi_sentence_english_passages_pct": 88.71,
+        "multi_paragraph_english_passages_pct": 0.0,
+        "recommendation": "Index passage-level docs first. Structure-aware chunking further splits by sentence/paragraph when multi_sentence_pct is high; semantic and sliding-window chunkers operate on sentence sequences within a passage."
+      },
+      "evaluation_implications": {
+        "gold_labels": "passages.is_selected[i] == 1 marks gold-relevant passage i",
+        "cross_lingual": "Same row has Eng_Query + English_passages and query + Translated_passages; supports Indic-query→English-evidence and reverse setups.",
+        "answer_fields": "Answer (Indic) and Eng_Answer (English)",
+        "caveat": "Each example is a ~10-passage candidate pool, not a global corpus. For corpus-level RAG, flatten unique passages across queries; for in-pool ranking metrics, rank within the 10 candidates."
+      },
+      "sample_examples": [
+        {
+          "query_id": 1102432,
+          "query_type": "DESCRIPTION",
+          "source_lang": "eng_Latn",
+          "target_lang": "ben_Beng",
+          "query": "কর্পোরেশন কী?",
+          "Answer": "একটি কর্পোরেশন হল একটি সংস্থা বা মানুষের একটি গোষ্ঠী যা একক সত্তা হিসাবে কাজ করার জন্য এবং আইনে স্বীকৃত।",
+          "Eng_Query": ". what is a corporation?",
+          "Eng_Answer": "A corporation is a company or group of people authorized to act as a single entity and recognized as such in law.",
+          "meta": {
+            "frequency_penalty": 0,
+            "max_tokens": 4096,
+            "model_name": "ckpt-3epochs-sft-then-400k-kd",
+            "presence_penalty": 0,
+            "temperature": 0,
+            "top_p": 1
+          },
+          "passages": {
+            "English_passages": {
+              "list_len": 10,
+              "first": "A company is incorporated in a specific nation, often within the bounds of a smaller subset of that nation, such as a state or province. The corporation is then…",
+              "elem_type": "str"
+            },
+            "Translated_passages": {
+              "list_len": 10,
+              "first": "একটি কোম্পানি একটি নির্দিষ্ট দেশে অন্তর্ভুক্ত করা হয়, প্রায়শই সেই দেশের একটি ছোট উপসেটের সীমার মধ্যে, যেমন একটি রাজ্য বা প্রদেশ। কর্পোরেশনটি তখন সেই রাজ্যের অ…",
+              "elem_type": "str"
+            },
+            "is_selected": {
+              "list_len": 10,
+              "first": 0,
+              "elem_type": "int"
+            }
+          },
+          "top_level_keys": [
+            "Answer",
+            "Eng_Answer",
+            "Eng_Query",
+            "meta",
+            "passages",
+            "query",
+            "query_id",
+            "query_type",
+            "source_lang",
+            "target_lang"
+          ]
+        },
+        {
+          "query_id": 1102431,
+          "query_type": "DESCRIPTION",
+          "source_lang": "eng_Latn",
+          "target_lang": "ben_Beng",
+          "query": "র‍্যাচেল কারসন কেন একটি বাধ্যবাধকতা সহ্য করার জন্য লিখেছিলেন",
+          "Answer": "র‍্যাচেল কারসন দ্য অব্লিগেশন টু এন্ডিউর লিখেছেন কারণ তিনি বিশ্বাস করেন যে মানুষ অবাঞ্ছিত পোকামাকড় এবং আগাছা নির্মূল করার চেষ্টা করলেও তিনি পরিবেশকে দূষিত করে আ…",
+          "Eng_Query": "why did rachel carson write an obligation to endure",
+          "Eng_Answer": "Rachel Carson writes The Obligation to Endure because believes that as man tries to eliminate unwanted insects and weeds, however he is actually causing more pr…",
+          "meta": {
+            "frequency_penalty": 0,
+            "max_tokens": 4096,
+            "model_name": "ckpt-3epochs-sft-then-400k-kd",
+            "presence_penalty": 0,
+            "temperature": 0,
+            "top_p": 1
+          },
+          "passages": {
+            "English_passages": {
+              "list_len": 10,
+              "first": "Read to write - grow a love of books (even if it's a comic book) Organizing an argument into paragraphs, words [that] worked together for a common purpose Walke…",
+              "elem_type": "str"
+            },
+            "Translated_passages": {
+              "list_len": 10,
+              "first": "পড়ার জন্য লিখুন - বইয়ের প্রতি ভালবাসা বৃদ্ধি করুন (এমনকি যদি এটি একটি কমিক বই হয়) একটি যুক্তি অনুচ্ছেদে সংগঠিত করা, শব্দ [যা] একটি সাধারণ উদ্দেশ্যে একসাথে কা…",
+              "elem_type": "str"
+            },
+            "is_selected": {
+              "list_len": 10,
+              "first": 0,
+              "elem_type": "int"
+            }
+          },
+          "top_level_keys": [
+            "Answer",
+            "Eng_Answer",
+            "Eng_Query",
+            "meta",
+            "passages",
+            "query",
+            "query_id",
+            "query_type",
+            "source_lang",
+            "target_lang"
+          ]
+        }
+      ],
+      "errors_or_anomalies": []
+    },
+    "ta": {
+      "lang_code": "ta",
+      "split": "validation",
+      "repo_path": "validation/tamval.parquet",
+      "samples_inspected": 80,
+      "features_repr": "{'source_lang': Value('string'), 'target_lang': Value('string'), 'meta': {'frequency_penalty': Value('int64'), 'max_tokens': Value('int64'), 'model_name': Value('string'), 'presence_penalty': Value('int64'), 'temperature': Value('int64'), 'top_p': Value('int64')}, 'Answer': Value('string'), 'query_id': Value('int64'), 'query_type': Value('string'), 'passages': {'English_passages': List(Value('string')), 'Translated_passages': List(Value('string')), 'is_selected': List(Value('int64'))}, 'Eng_Query': Value('string'), 'Eng_Answer': Value('string'), 'query': Value('string')}",
+      "top_level_and_nested_keys": [
+        "Answer",
+        "Eng_Answer",
+        "Eng_Query",
+        "meta",
+        "meta.frequency_penalty",
+        "meta.max_tokens",
+        "meta.model_name",
+        "meta.presence_penalty",
+        "meta.temperature",
+        "meta.top_p",
+        "passages",
+        "passages.English_passages",
+        "passages.Translated_passages",
+        "passages.is_selected",
+        "query",
+        "query_id",
+        "query_type",
+        "source_lang",
+        "target_lang"
+      ],
+      "field_presence": {
+        "Answer": {
+          "present": 80,
+          "missing_or_empty": 0,
+          "types": {
+            "str": 80
+          },
+          "samples": [
+            "ஒரு நிறுவனம் என்பது சட்டத்தில் அங்கீகரிக்கப்பட்ட ஒரு தனி அமைப்பாக செயல்பட அங்கீகரிக்கப்பட்ட ஒரு நிறுவனம் அல்லது மக்கள் குழுவாகும்.",
+            "ரேச்சல் கார்சன் எழுதுகிறார், மனிதன் விரும்பத்தகாத பூச்சிகளையும் களைகளையும் அகற்ற முயற்சிக்கும்போது, அவன் உண்மையில் சுற்றுச்சூழலை மாசுபடுத்துவதன் மூலம் மேலும் பி…"
+          ]
+        },
+        "Eng_Answer": {
+          "present": 80,
+          "missing_or_empty": 1,
+          "types": {
+            "str": 80
+          },
+          "samples": [
+            "A corporation is a company or group of people authorized to act as a single entity and recognized as such in law.",
+            "Rachel Carson writes The Obligation to Endure because believes that as man tries to eliminate unwanted insects and weeds, however he is actually causing more pr…"
+          ]
+        },
+        "Eng_Query": {
+          "present": 80,
+          "missing_or_empty": 0,
+          "types": {
+            "str": 80
+          },
+          "samples": [
+            ". what is a corporation?",
+            "why did rachel carson write an obligation to endure"
+          ]
+        },
+        "meta": {
+          "present": 80,
+          "missing_or_empty": 0,
+          "types": {
+            "dict": 80
+          },
+          "samples": [
+            {
+              "frequency_penalty": 0,
+              "max_tokens": 4096,
+              "model_name": "ckpt-3epochs-sft-then-400k-kd",
+              "presence_penalty": 0,
+              "temperature": 0,
+              "top_p": 1
+            },
+            {
+              "frequency_penalty": 0,
+              "max_tokens": 4096,
+              "model_name": "ckpt-3epochs-sft-then-400k-kd",
+              "presence_penalty": 0,
+              "temperature": 0,
+              "top_p": 1
+            }
+          ]
+        },
+        "passages": {
+          "present": 80,
+          "missing_or_empty": 0,
+          "types": {
+            "dict": 80
+          },
+          "samples": [
+            {
+              "English_passages": {
+                "list_len": 10,
+                "first": "A company is incorporated in a specific nation, often within the bounds of a smaller subset of that nation, such as a state or province. The corporation is then…",
+                "elem_type": "str"
+              },
+              "Translated_passages": {
+                "list_len": 10,
+                "first": "ஒரு நிறுவனம் ஒரு குறிப்பிட்ட நாட்டில், பெரும்பாலும் அந்த நாட்டின் ஒரு சிறிய துணைக்குழுவின் எல்லைக்குள், அதாவது ஒரு மாநிலம் அல்லது மாகாணத்திற்குள் நிறுவப்படுகிறத…",
+                "elem_type": "str"
+              },
+              "is_selected": {
+                "list_len": 10,
+                "first": 0,
+                "elem_type": "int"
+              }
+            },
+            {
+              "English_passages": {
+                "list_len": 10,
+                "first": "Read to write - grow a love of books (even if it's a comic book) Organizing an argument into paragraphs, words [that] worked together for a common purpose Walke…",
+                "elem_type": "str"
+              },
+              "Translated_passages": {
+                "list_len": 10,
+                "first": "படித்து எழுதுங்கள் - புத்தகங்கள் மீதான அன்பை வளர்த்துக் கொள்ளுங்கள் (அது ஒரு காமிக் புத்தகமாக இருந்தாலும்) வாக்கியங்களாக வாதத்தை ஒழுங்கமைத்து, வார்த்தைகள் [அவை]…",
+                "elem_type": "str"
+              },
+              "is_selected": {
+                "list_len": 10,
+                "first": 0,
+                "elem_type": "int"
+              }
+            }
+          ]
+        },
+        "passages.English_passages": {
+          "present": 80,
+          "missing_or_empty": 0,
+          "types": {
+            "list": 80
+          },
+          "samples": []
+        },
+        "passages.Translated_passages": {
+          "present": 80,
+          "missing_or_empty": 0,
+          "types": {
+            "list": 80
+          },
+          "samples": []
+        },
+        "passages.is_selected": {
+          "present": 80,
+          "missing_or_empty": 0,
+          "types": {
+            "list": 80
+          },
+          "samples": []
+        },
+        "query": {
+          "present": 80,
+          "missing_or_empty": 0,
+          "types": {
+            "str": 80
+          },
+          "samples": [
+            "ஒரு நிறுவனம் என்பது என்ன?",
+            "ஏன் ரேச்சல் கார்சன் ஒரு கடமையை நிறைவேற்ற வேண்டும் என்று எழுதினார்"
+          ]
+        },
+        "query_id": {
+          "present": 80,
+          "missing_or_empty": 0,
+          "types": {
+            "int": 80
+          },
+          "samples": [
+            1102432,
+            1102431
+          ]
+        },
+        "query_type": {
+          "present": 80,
+          "missing_or_empty": 0,
+          "types": {
+            "str": 80
+          },
+          "samples": [
+            "DESCRIPTION",
+            "DESCRIPTION"
+          ]
+        },
+        "source_lang": {
+          "present": 80,
+          "missing_or_empty": 0,
+          "types": {
+            "str": 80
+          },
+          "samples": [
+            "eng_Latn",
+            "eng_Latn"
+          ]
+        },
+        "target_lang": {
+          "present": 80,
+          "missing_or_empty": 0,
+          "types": {
+            "str": 80
+          },
+          "samples": [
+            "tam_Taml",
+            "tam_Taml"
+          ]
+        }
+      },
+      "languages": {
+        "source_lang_counts": {
+          "eng_Latn": 80
+        },
+        "target_lang_counts": {
+          "tam_Taml": 80
+        }
+      },
+      "query_types": {
+        "DESCRIPTION": 47,
+        "NUMERIC": 27,
+        "ENTITY": 5,
+        "LOCATION": 1
+      },
+      "query_ids": {
+        "unique": 80,
+        "duplicate_in_sample": 0,
+        "min": 9671,
+        "max": 1102432,
+        "note": "query_id is the MS MARCO query id. There is NO document_id field; derive passage ids as f'{query_id}:{passage_index}:{lang}'."
+      },
+      "data_quality": {
+        "passage_list_length_mismatches": 0,
+        "empty_Answer": 0,
+        "empty_Eng_Answer": 1,
+        "Eng_Query_leading_punctuation": 1,
+        "Eng_Query_leading_punct_pct": 1.25
+      },
+      "passages": {
+        "count_per_example": {
+          "min": 7,
+          "max": 10,
+          "mean": 9.96,
+          "mode": 10
+        },
+        "selected_relevant_per_example": {
+          "min": 0,
+          "max": 2,
+          "mean": 0.562,
+          "rows_with_ge1_selected": 41,
+          "rows_with_0_selected": 39,
+          "rows_with_gt1_selected": 4
+        },
+        "english_passage_lengths": {
+          "n": 797,
+          "chars": {
+            "min": 55.0,
+            "p50": 293.0,
+            "p90": 464.0,
+            "p99": 637.0,
+            "max": 851.0,
+            "mean": 310.03
+          },
+          "words": {
+            "min": 9.0,
+            "p50": 50.0,
+            "p90": 77.0,
+            "p99": 112.0,
+            "max": 150.0,
+            "mean": 52.86
+          },
+          "sentences": {
+            "min": 1.0,
+            "p50": 3.0,
+            "p90": 6.0,
+            "p99": 10.0,
+            "max": 17.0,
+            "mean": 3.49
+          },
+          "paragraphs": {
+            "min": 1.0,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0,
+            "mean": 1.0
+          },
+          "multi_sentence_pct": 88.71,
+          "multi_paragraph_pct": 0.0
+        },
+        "translated_passage_lengths": {
+          "n": 797,
+          "chars": {
+            "min": 64.0,
+            "p50": 337.0,
+            "p90": 514.0,
+            "p99": 813.0,
+            "max": 3016.0,
+            "mean": 365.65
+          },
+          "words": {
+            "min": 7.0,
+            "p50": 38.0,
+            "p90": 61.0,
+            "p99": 104.0,
+            "max": 472.0,
+            "mean": 42.17
+          },
+          "sentences": {
+            "min": 1.0,
+            "p50": 3.0,
+            "p90": 6.0,
+            "p99": 12.0,
+            "max": 68.0,
+            "mean": 3.53
+          },
+          "paragraphs": {
+            "min": 1.0,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 4.0,
+            "mean": 1.01
+          },
+          "multi_sentence_pct": 87.33,
+          "multi_paragraph_pct": 0.25
+        },
+        "duplicate_passages_in_sample": {
+          "english_extra_copies": 1,
+          "translated_extra_copies": 1,
+          "unique_english": 796,
+          "unique_translated": 796
+        },
+        "document_id": "ABSENT — synthesize from query_id + passage index + language tag"
+      },
+      "text_lengths": {
+        "query": {
+          "n": 80,
+          "chars": {
+            "min": 10.0,
+            "p50": 41.0,
+            "p90": 61.0,
+            "p99": 80.0,
+            "max": 80.0,
+            "mean": 40.42
+          },
+          "words": {
+            "min": 2.0,
+            "p50": 5.0,
+            "p90": 7.0,
+            "p99": 9.0,
+            "max": 9.0,
+            "mean": 4.85
+          },
+          "sentences": {
+            "min": 1.0,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 2.0,
+            "max": 2.0,
+            "mean": 1.01
+          },
+          "paragraphs": {
+            "min": 1.0,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0,
+            "mean": 1.0
+          },
+          "multi_sentence_pct": 1.25,
+          "multi_paragraph_pct": 0.0
+        },
+        "Answer": {
+          "n": 80,
+          "chars": {
+            "min": 3.0,
+            "p50": 19.0,
+            "p90": 215.0,
+            "p99": 503.0,
+            "max": 503.0,
+            "mean": 75.04
+          },
+          "words": {
+            "min": 1.0,
+            "p50": 3.0,
+            "p90": 23.0,
+            "p99": 63.0,
+            "max": 63.0,
+            "mean": 8.97
+          },
+          "sentences": {
+            "min": 1.0,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 11.0,
+            "max": 11.0,
+            "mean": 1.23
+          },
+          "paragraphs": {
+            "min": 1.0,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0,
+            "mean": 1.0
+          },
+          "multi_sentence_pct": 7.5,
+          "multi_paragraph_pct": 0.0
+        },
+        "Eng_Query": {
+          "n": 80,
+          "chars": {
+            "min": 8.0,
+            "p50": 31.0,
+            "p90": 45.0,
+            "p99": 63.0,
+            "max": 63.0,
+            "mean": 31.64
+          },
+          "words": {
+            "min": 2.0,
+            "p50": 6.0,
+            "p90": 8.0,
+            "p99": 9.0,
+            "max": 9.0,
+            "mean": 5.54
+          },
+          "sentences": {
+            "min": 1.0,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 2.0,
+            "max": 2.0,
+            "mean": 1.02
+          },
+          "paragraphs": {
+            "min": 1.0,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0,
+            "mean": 1.0
+          },
+          "multi_sentence_pct": 2.5,
+          "multi_paragraph_pct": 0.0
+        },
+        "Eng_Answer": {
+          "n": 79,
+          "chars": {
+            "min": 2.0,
+            "p50": 18.0,
+            "p90": 189.0,
+            "p99": 406.0,
+            "max": 406.0,
+            "mean": 62.73
+          },
+          "words": {
+            "min": 1.0,
+            "p50": 3.0,
+            "p90": 27.0,
+            "p99": 82.0,
+            "max": 82.0,
+            "mean": 10.72
+          },
+          "sentences": {
+            "min": 1.0,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 11.0,
+            "max": 11.0,
+            "mean": 1.27
+          },
+          "paragraphs": {
+            "min": 1.0,
+            "p50": 1.0,
+            "p90": 1.0,
+            "p99": 1.0,
+            "max": 1.0,
+            "mean": 1.0
+          },
+          "multi_sentence_pct": 7.59,
+          "multi_paragraph_pct": 0.0
+        }
+      },
+      "chunking_implications": {
+        "base_unit": "Each entry in English_passages / Translated_passages",
+        "multi_sentence_english_passages_pct": 88.71,
+        "multi_paragraph_english_passages_pct": 0.0,
+        "recommendation": "Index passage-level docs first. Structure-aware chunking further splits by sentence/paragraph when multi_sentence_pct is high; semantic and sliding-window chunkers operate on sentence sequences within a passage."
+      },
+      "evaluation_implications": {
+        "gold_labels": "passages.is_selected[i] == 1 marks gold-relevant passage i",
+        "cross_lingual": "Same row has Eng_Query + English_passages and query + Translated_passages; supports Indic-query→English-evidence and reverse setups.",
+        "answer_fields": "Answer (Indic) and Eng_Answer (English)",
+        "caveat": "Each example is a ~10-passage candidate pool, not a global corpus. For corpus-level RAG, flatten unique passages across queries; for in-pool ranking metrics, rank within the 10 candidates."
+      },
+      "sample_examples": [
+        {
+          "query_id": 1102432,
+          "query_type": "DESCRIPTION",
+          "source_lang": "eng_Latn",
+          "target_lang": "tam_Taml",
+          "query": "ஒரு நிறுவனம் என்பது என்ன?",
+          "Answer": "ஒரு நிறுவனம் என்பது சட்டத்தில் அங்கீகரிக்கப்பட்ட ஒரு தனி அமைப்பாக செயல்பட அங்கீகரிக்கப்பட்ட ஒரு நிறுவனம் அல்லது மக்கள் குழுவாகும்.",
+          "Eng_Query": ". what is a corporation?",
+          "Eng_Answer": "A corporation is a company or group of people authorized to act as a single entity and recognized as such in law.",
+          "meta": {
+            "frequency_penalty": 0,
+            "max_tokens": 4096,
+            "model_name": "ckpt-3epochs-sft-then-400k-kd",
+            "presence_penalty": 0,
+            "temperature": 0,
+            "top_p": 1
+          },
+          "passages": {
+            "English_passages": {
+              "list_len": 10,
+              "first": "A company is incorporated in a specific nation, often within the bounds of a smaller subset of that nation, such as a state or province. The corporation is then…",
+              "elem_type": "str"
+            },
+            "Translated_passages": {
+              "list_len": 10,
+              "first": "ஒரு நிறுவனம் ஒரு குறிப்பிட்ட நாட்டில், பெரும்பாலும் அந்த நாட்டின் ஒரு சிறிய துணைக்குழுவின் எல்லைக்குள், அதாவது ஒரு மாநிலம் அல்லது மாகாணத்திற்குள் நிறுவப்படுகிறத…",
+              "elem_type": "str"
+            },
+            "is_selected": {
+              "list_len": 10,
+              "first": 0,
+              "elem_type": "int"
+            }
+          },
+          "top_level_keys": [
+            "Answer",
+            "Eng_Answer",
+            "Eng_Query",
+            "meta",
+            "passages",
+            "query",
+            "query_id",
+            "query_type",
+            "source_lang",
+            "target_lang"
+          ]
+        },
+        {
+          "query_id": 1102431,
+          "query_type": "DESCRIPTION",
+          "source_lang": "eng_Latn",
+          "target_lang": "tam_Taml",
+          "query": "ஏன் ரேச்சல் கார்சன் ஒரு கடமையை நிறைவேற்ற வேண்டும் என்று எழுதினார்",
+          "Answer": "ரேச்சல் கார்சன் எழுதுகிறார், மனிதன் விரும்பத்தகாத பூச்சிகளையும் களைகளையும் அகற்ற முயற்சிக்கும்போது, அவன் உண்மையில் சுற்றுச்சூழலை மாசுபடுத்துவதன் மூலம் மேலும் பி…",
+          "Eng_Query": "why did rachel carson write an obligation to endure",
+          "Eng_Answer": "Rachel Carson writes The Obligation to Endure because believes that as man tries to eliminate unwanted insects and weeds, however he is actually causing more pr…",
+          "meta": {
+            "frequency_penalty": 0,
+            "max_tokens": 4096,
+            "model_name": "ckpt-3epochs-sft-then-400k-kd",
+            "presence_penalty": 0,
+            "temperature": 0,
+            "top_p": 1
+          },
+          "passages": {
+            "English_passages": {
+              "list_len": 10,
+              "first": "Read to write - grow a love of books (even if it's a comic book) Organizing an argument into paragraphs, words [that] worked together for a common purpose Walke…",
+              "elem_type": "str"
+            },
+            "Translated_passages": {
+              "list_len": 10,
+              "first": "படித்து எழுதுங்கள் - புத்தகங்கள் மீதான அன்பை வளர்த்துக் கொள்ளுங்கள் (அது ஒரு காமிக் புத்தகமாக இருந்தாலும்) வாக்கியங்களாக வாதத்தை ஒழுங்கமைத்து, வார்த்தைகள் [அவை]…",
+              "elem_type": "str"
+            },
+            "is_selected": {
+              "list_len": 10,
+              "first": 0,
+              "elem_type": "int"
+            }
+          },
+          "top_level_keys": [
+            "Answer",
+            "Eng_Answer",
+            "Eng_Query",
+            "meta",
+            "passages",
+            "query",
+            "query_id",
+            "query_type",
+            "source_lang",
+            "target_lang"
+          ]
+        }
+      ],
+      "errors_or_anomalies": []
+    }
+  },
+  "ingestion_recommendations": {
+    "load_pattern": "load_dataset('parquet', data_files='hf://datasets/ai4bharat/MSMARCO-XI/validation/hinval.parquet', split='train', streaming=True)",
+    "index_units": "Each passage string (English and/or translated) as a document",
+    "doc_id_scheme": "{query_id}:{passage_idx}:{lang_tag}",
+    "languages_to_index": [
+      "as",
+      "bn",
+      "gu",
+      "hi",
+      "kn",
+      "ml",
+      "mr",
+      "ne",
+      "or",
+      "pa",
+      "sa",
+      "ta",
+      "te",
+      "ur",
+      "en"
+    ],
+    "gold_for_eval": "is_selected == 1 within the example's passage list",
+    "cleaning": "Strip leading punctuation from Eng_Query; drop empty Answer/Eng_Answer; dedupe identical passage text across queries when building a global corpus",
+    "chunking": "Start from passage-level units; apply sentence/semantic/sliding-window when passage length stats show multi-sentence content",
+    "query_types_for_routing": "DESCRIPTION / ENTITY / NUMERIC / LOCATION / PERSON etc. from query_type, plus length/complexity heuristics → FAST / ACCURATE / DEEP"
+  }
+}

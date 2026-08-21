@@ -1,0 +1,29 @@
+{
+  "source_lang": "eng_Latn",
+  "target_lang": "hin_Deva",
+  "meta": {
+    "frequency_penalty": 0,
+    "max_tokens": 4096,
+    "model_name": "ckpt-3epochs-sft-then-400k-kd",
+    "presence_penalty": 0,
+    "temperature": 0,
+    "top_p": 1
+  },
+  "Answer": "निगम एक कंपनी या लोगों का समूह होता है जो एक एकल इकाई के रूप में कार्य करने के लिए अधिकृत होता है और कानून में इस प्रकार से मान्यता प्राप्त होती है।",
+  "query_id": 1102432,
+  "query_type": "DESCRIPTION",
+  "passages": {
+    "English_passages": [
+      "A company is incorporated in a specific nation, often within the bounds of a smaller subset of that nation, such as a state or province.",
+      "Unrelated passage used as a distractor for retrieval evaluation."
+    ],
+    "Translated_passages": [
+      "एक कंपनी एक विशिष्ट देश में निगमित होती है, अक्सर उस देश के एक छोटे उपसमूह, जैसे कि एक राज्य या प्रांत, की सीमाओं के भीतर।",
+      "पुनर्प्राप्ति मूल्यांकन के लिए प्रयुक्त असंबंधित अंश।"
+    ],
+    "is_selected": [1, 0]
+  },
+  "Eng_Query": ". what is a corporation?",
+  "Eng_Answer": "A corporation is a company or group of people authorized to act as a single entity and recognized as such in law.",
+  "query": "कॉर्पोरेशन क्या है?"
+}
