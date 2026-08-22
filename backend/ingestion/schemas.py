@@ -96,6 +96,45 @@ class CleanExample:
 
 
 @dataclass
+class ChunkRecord:
+    """
+    One chunk produced from a PassageRecord.
+
+    document_id / query_id / language come from the verified IR.
+    passage_id is an alias of document_id (no separate passage id in MSMARCO-XI).
+    chunk_id is deterministic: '{document_id}:{strategy}:{chunk_index}'.
+    """
+
+    chunk_id: str
+    document_id: str
+    passage_id: str
+    query_id: int
+    language: str
+    language_flores: str
+    chunk_strategy: str
+    chunk_index: int
+    start_sentence: int
+    end_sentence: int
+    text: str
+    source: str
+    passage_index: int
+    passage_source: str
+    is_selected: bool
+    char_length: int = 0
+    sentence_count: int = 0
+    adaptive_reason: str | None = None
+
+    def __post_init__(self) -> None:
+        if not self.char_length:
+            self.char_length = len(self.text)
+        if not self.sentence_count and self.end_sentence >= self.start_sentence:
+            self.sentence_count = self.end_sentence - self.start_sentence + 1
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+
+@dataclass
 class IngestStats:
     """Measured during an ingest run — never fabricated."""
 

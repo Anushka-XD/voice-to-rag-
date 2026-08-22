@@ -1,0 +1,303 @@
+{
+  "dataset": "ai4bharat/MSMARCO-XI",
+  "note": "Measured on a development subset. No strategy is declared winner here.",
+  "input": {
+    "jsonl": "/Users/anushka/voice-to-rag/data/clean/passages_validation.jsonl",
+    "langs": [
+      "hi"
+    ],
+    "split": "validation",
+    "max_passages": 80,
+    "passage_stats": {
+      "n": 80,
+      "languages": {
+        "en": 40,
+        "hi": 40
+      },
+      "selected_passages": 6,
+      "avg_passage_chars": 287.38,
+      "avg_sentences_per_passage": 3.08,
+      "single_sentence_passages": 13,
+      "multi_sentence_passages": 67
+    }
+  },
+  "config": {
+    "target_chunk_chars": 420,
+    "min_chunk_chars": 80,
+    "max_chunk_chars": 900,
+    "target_sentences": 3,
+    "min_sentences": 1,
+    "max_sentences": 6,
+    "overlap_sentences": 1,
+    "sliding_window_sentences": 4,
+    "sliding_overlap_sentences": 2,
+    "semantic_similarity_threshold": 0.42,
+    "semantic_embed_dim": 256,
+    "short_max_chars": 160,
+    "short_max_sentences": 1,
+    "long_min_chars": 520,
+    "long_min_sentences": 6,
+    "topic_shift_min_sentences": 3,
+    "development_sample_size": 80,
+    "source_name": "MSMARCO-XI"
+  },
+  "strategies": {
+    "structure": {
+      "n_passages": 80,
+      "n_chunks": 117,
+      "passages_with_zero_chunks": 0,
+      "avg_chunks_per_passage": 1.4625,
+      "median_chunks_per_passage": 1.0,
+      "chunk_chars": {
+        "avg": 216.61,
+        "median": 228.0,
+        "min": 10,
+        "max": 397,
+        "p90": 310.0
+      },
+      "chunk_sentences": {
+        "avg": 2.42,
+        "median": 3.0,
+        "min": 1,
+        "max": 3
+      },
+      "mean_consecutive_jaccard_overlap": 0.2275,
+      "gold_passages": 6,
+      "gold_passages_with_at_least_one_chunk": 6,
+      "gold_boundary_preserved_pct": 100.0,
+      "adaptive_reason_counts": {},
+      "processing_seconds": 0.001,
+      "sample_chunk_ids": [
+        "1102432:0:en:structure:0",
+        "1102432:0:en:structure:1",
+        "1102432:0:hi:structure:0"
+      ],
+      "sample_chunks": [
+        {
+          "chunk_id": "1102432:0:en:structure:0",
+          "document_id": "1102432:0:en",
+          "query_id": 1102432,
+          "is_selected": false,
+          "start_sentence": 0,
+          "end_sentence": 2,
+          "adaptive_reason": null,
+          "text_preview": "A company is incorporated in a specific nation, often within the bounds of a smaller subset of that nation, such as a state or province. The corporation is then governed by the law"
+        },
+        {
+          "chunk_id": "1102432:0:en:structure:1",
+          "document_id": "1102432:0:en",
+          "query_id": 1102432,
+          "is_selected": false,
+          "start_sentence": 2,
+          "end_sentence": 3,
+          "adaptive_reason": null,
+          "text_preview": "A corporation may issue stock, either private or public, or may be classified as a non-stock corporation. If stock is issued, the corporation will usually be governed by its shareh"
+        },
+        {
+          "chunk_id": "1102432:0:hi:structure:0",
+          "document_id": "1102432:0:hi",
+          "query_id": 1102432,
+          "is_selected": false,
+          "start_sentence": 0,
+          "end_sentence": 2,
+          "adaptive_reason": null,
+          "text_preview": "एक कंपनी एक विशिष्ट देश में निगमित होती है, अक्सर उस देश के एक छोटे उपसमूह, जैसे कि एक राज्य या प्रांत, की सीमाओं के भीतर। निगम तब उस राज्य में निगमन के कानूनों द्वारा शासित होता ह"
+        }
+      ]
+    },
+    "semantic": {
+      "n_passages": 80,
+      "n_chunks": 102,
+      "passages_with_zero_chunks": 0,
+      "avg_chunks_per_passage": 1.275,
+      "median_chunks_per_passage": 1.0,
+      "chunk_chars": {
+        "avg": 225.77,
+        "median": 226.0,
+        "min": 36,
+        "max": 459,
+        "p90": 342.0
+      },
+      "chunk_sentences": {
+        "avg": 2.43,
+        "median": 2.0,
+        "min": 1,
+        "max": 6
+      },
+      "mean_consecutive_jaccard_overlap": 0.0182,
+      "gold_passages": 6,
+      "gold_passages_with_at_least_one_chunk": 6,
+      "gold_boundary_preserved_pct": 100.0,
+      "adaptive_reason_counts": {},
+      "processing_seconds": 0.043,
+      "sample_chunk_ids": [
+        "1102432:0:en:semantic:0",
+        "1102432:0:hi:semantic:0",
+        "1102432:0:hi:semantic:1"
+      ],
+      "sample_chunks": [
+        {
+          "chunk_id": "1102432:0:en:semantic:0",
+          "document_id": "1102432:0:en",
+          "query_id": 1102432,
+          "is_selected": false,
+          "start_sentence": 0,
+          "end_sentence": 3,
+          "adaptive_reason": null,
+          "text_preview": "A company is incorporated in a specific nation, often within the bounds of a smaller subset of that nation, such as a state or province. The corporation is then governed by the law"
+        },
+        {
+          "chunk_id": "1102432:0:hi:semantic:0",
+          "document_id": "1102432:0:hi",
+          "query_id": 1102432,
+          "is_selected": false,
+          "start_sentence": 0,
+          "end_sentence": 1,
+          "adaptive_reason": null,
+          "text_preview": "एक कंपनी एक विशिष्ट देश में निगमित होती है, अक्सर उस देश के एक छोटे उपसमूह, जैसे कि एक राज्य या प्रांत, की सीमाओं के भीतर। निगम तब उस राज्य में निगमन के कानूनों द्वारा शासित होता ह"
+        },
+        {
+          "chunk_id": "1102432:0:hi:semantic:1",
+          "document_id": "1102432:0:hi",
+          "query_id": 1102432,
+          "is_selected": false,
+          "start_sentence": 2,
+          "end_sentence": 3,
+          "adaptive_reason": null,
+          "text_preview": "एक निगम या तो निजी या सार्वजनिक स्टॉक जारी कर सकता है, या इसे गैर-स्टॉक निगम के रूप में वर्गीकृत किया जा सकता है। यदि स्टॉक जारी किया जाता है, तो निगम आमतौर पर अपने शेयरधारकों द्वा"
+        }
+      ]
+    },
+    "sliding": {
+      "n_passages": 80,
+      "n_chunks": 100,
+      "passages_with_zero_chunks": 0,
+      "avg_chunks_per_passage": 1.25,
+      "median_chunks_per_passage": 1.0,
+      "chunk_chars": {
+        "avg": 248.83,
+        "median": 245.0,
+        "min": 83,
+        "max": 459,
+        "p90": 357.0
+      },
+      "chunk_sentences": {
+        "avg": 2.86,
+        "median": 3.0,
+        "min": 1,
+        "max": 4
+      },
+      "mean_consecutive_jaccard_overlap": 0.3633,
+      "gold_passages": 6,
+      "gold_passages_with_at_least_one_chunk": 6,
+      "gold_boundary_preserved_pct": 100.0,
+      "adaptive_reason_counts": {},
+      "processing_seconds": 0.001,
+      "sample_chunk_ids": [
+        "1102432:0:en:sliding:0",
+        "1102432:0:hi:sliding:0",
+        "1102432:1:en:sliding:0"
+      ],
+      "sample_chunks": [
+        {
+          "chunk_id": "1102432:0:en:sliding:0",
+          "document_id": "1102432:0:en",
+          "query_id": 1102432,
+          "is_selected": false,
+          "start_sentence": 0,
+          "end_sentence": 3,
+          "adaptive_reason": null,
+          "text_preview": "A company is incorporated in a specific nation, often within the bounds of a smaller subset of that nation, such as a state or province. The corporation is then governed by the law"
+        },
+        {
+          "chunk_id": "1102432:0:hi:sliding:0",
+          "document_id": "1102432:0:hi",
+          "query_id": 1102432,
+          "is_selected": false,
+          "start_sentence": 0,
+          "end_sentence": 3,
+          "adaptive_reason": null,
+          "text_preview": "एक कंपनी एक विशिष्ट देश में निगमित होती है, अक्सर उस देश के एक छोटे उपसमूह, जैसे कि एक राज्य या प्रांत, की सीमाओं के भीतर। निगम तब उस राज्य में निगमन के कानूनों द्वारा शासित होता ह"
+        },
+        {
+          "chunk_id": "1102432:1:en:sliding:0",
+          "document_id": "1102432:1:en",
+          "query_id": 1102432,
+          "is_selected": false,
+          "start_sentence": 0,
+          "end_sentence": 1,
+          "adaptive_reason": null,
+          "text_preview": "Today, there is a growing community of more than 2,100 Certified B Corps from 50 countries and over 130 industries working together toward 1 unifying goal: to redefine success in b"
+        }
+      ]
+    },
+    "adaptive": {
+      "n_passages": 80,
+      "n_chunks": 112,
+      "passages_with_zero_chunks": 0,
+      "avg_chunks_per_passage": 1.4,
+      "median_chunks_per_passage": 1.0,
+      "chunk_chars": {
+        "avg": 220.77,
+        "median": 235.0,
+        "min": 36,
+        "max": 397,
+        "p90": 323.0
+      },
+      "chunk_sentences": {
+        "avg": 2.49,
+        "median": 2.0,
+        "min": 1,
+        "max": 5
+      },
+      "mean_consecutive_jaccard_overlap": 0.1995,
+      "gold_passages": 6,
+      "gold_passages_with_at_least_one_chunk": 6,
+      "gold_boundary_preserved_pct": 100.0,
+      "adaptive_reason_counts": {
+        "structure:typical_multi_sentence": 46,
+        "semantic:topic_shift": 31,
+        "structure:short_passage": 15,
+        "sliding:long_passage": 20
+      },
+      "processing_seconds": 0.035,
+      "sample_chunk_ids": [
+        "1102432:0:en:adaptive:0",
+        "1102432:0:en:adaptive:1",
+        "1102432:0:hi:adaptive:0"
+      ],
+      "sample_chunks": [
+        {
+          "chunk_id": "1102432:0:en:adaptive:0",
+          "document_id": "1102432:0:en",
+          "query_id": 1102432,
+          "is_selected": false,
+          "start_sentence": 0,
+          "end_sentence": 2,
+          "adaptive_reason": "structure:typical_multi_sentence",
+          "text_preview": "A company is incorporated in a specific nation, often within the bounds of a smaller subset of that nation, such as a state or province. The corporation is then governed by the law"
+        },
+        {
+          "chunk_id": "1102432:0:en:adaptive:1",
+          "document_id": "1102432:0:en",
+          "query_id": 1102432,
+          "is_selected": false,
+          "start_sentence": 2,
+          "end_sentence": 3,
+          "adaptive_reason": "structure:typical_multi_sentence",
+          "text_preview": "A corporation may issue stock, either private or public, or may be classified as a non-stock corporation. If stock is issued, the corporation will usually be governed by its shareh"
+        },
+        {
+          "chunk_id": "1102432:0:hi:adaptive:0",
+          "document_id": "1102432:0:hi",
+          "query_id": 1102432,
+          "is_selected": false,
+          "start_sentence": 0,
+          "end_sentence": 1,
+          "adaptive_reason": "semantic:topic_shift",
+          "text_preview": "एक कंपनी एक विशिष्ट देश में निगमित होती है, अक्सर उस देश के एक छोटे उपसमूह, जैसे कि एक राज्य या प्रांत, की सीमाओं के भीतर। निगम तब उस राज्य में निगमन के कानूनों द्वारा शासित होता ह"
+        }
+      ]
+    }
+  }
+}
