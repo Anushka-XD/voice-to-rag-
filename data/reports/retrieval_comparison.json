@@ -1,0 +1,49 @@
+{
+  "dataset": "ai4bharat/MSMARCO-XI",
+  "relevance_definition": "Passage-level gold: document_id in gold_document_ids from is_selected==1. No chunk-level labels.",
+  "collection_points": 289,
+  "bm25_docs": 289,
+  "rrf_k": 60,
+  "candidate_k": 20,
+  "top_k": 10,
+  "language_filter": null,
+  "dense": {
+    "retriever": "dense",
+    "n_queries_considered": 10,
+    "n_queries_with_gold": 4,
+    "skipped_no_gold": 6,
+    "recall_at_5": 0.75,
+    "recall_at_10": 1.0,
+    "mrr": 0.3,
+    "latency_ms": {
+      "total_p50": 4.3,
+      "total_mean": 6339.562
+    }
+  },
+  "bm25": {
+    "retriever": "bm25",
+    "n_queries_considered": 10,
+    "n_queries_with_gold": 4,
+    "skipped_no_gold": 6,
+    "recall_at_5": 0.75,
+    "recall_at_10": 1.0,
+    "mrr": 0.225,
+    "latency_ms": {
+      "total_p50": 2.05,
+      "total_mean": 3.605
+    }
+  },
+  "hybrid": {
+    "retriever": "hybrid",
+    "n_queries_considered": 10,
+    "n_queries_with_gold": 4,
+    "skipped_no_gold": 6,
+    "recall_at_5": 0.5,
+    "recall_at_10": 1.0,
+    "mrr": 0.3958,
+    "latency_ms": {
+      "total_p50": 3.398,
+      "total_mean": 3.723
+    }
+  }
+}

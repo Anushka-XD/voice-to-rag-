@@ -1,0 +1,39 @@
+{
+  "path": "/Users/anushka/voice-to-rag/data/eval/retrieval_eval.jsonl",
+  "n_queries": 112,
+  "language_distribution": {
+    "as": 4,
+    "en": 56,
+    "bn": 4,
+    "gu": 4,
+    "hi": 4,
+    "kn": 4,
+    "ml": 4,
+    "mr": 4,
+    "ne": 4,
+    "or": 4,
+    "pa": 4,
+    "sa": 4,
+    "ta": 4,
+    "te": 4,
+    "ur": 4
+  },
+  "route_distribution": {
+    "FAST": 54,
+    "ACCURATE": 58
+  },
+  "query_type_distribution": {
+    "DESCRIPTION": 84,
+    "NUMERIC": 28
+  },
+  "indexed_document_ids": 2250,
+  "build_stats": {
+    "examples_seen": 210,
+    "examples_without_gold": 154,
+    "indic_emitted": 56,
+    "english_emitted": 56,
+    "dropped_no_indexed_gold": 0,
+    "deep_in_dataset": 0,
+    "note": "No query in this gold set classified as DEEP. DEEP examples were not manufactured."
+  }
+}

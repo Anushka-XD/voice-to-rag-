@@ -175,6 +175,24 @@ class QdrantVectorStore:
             )
         return results
 
+    def iter_payloads(self, batch_size: int = 128) -> Any:
+        """Scroll collection payloads (no vectors) so BM25 can share the same chunks."""
+        if not self.collection_exists():
+            return
+        offset = None
+        while True:
+            records, offset = self.client.scroll(
+                collection_name=self.collection_name,
+                limit=batch_size,
+                offset=offset,
+                with_payload=True,
+                with_vectors=False,
+            )
+            for rec in records:
+                yield dict(rec.payload or {})
+            if offset is None:
+                break
+
     def count(self) -> int:
         if not self.collection_exists():
             return 0

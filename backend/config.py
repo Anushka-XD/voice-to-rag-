@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT / "data"
 REPORTS_DIR = DATA_DIR / "reports"
 CLEAN_DIR = DATA_DIR / "clean"
+EVAL_DIR = DATA_DIR / "eval"
 INDEX_DIR = DATA_DIR / "indexes"
 CACHE_DIR = DATA_DIR / "cache"
 INSPECTION_REPORT = REPORTS_DIR / "msmarco_xi_inspection.json"
@@ -116,6 +117,13 @@ def _env_int(name: str, default: int) -> int:
     return int(raw)
 
 
+def _env_float(name: str, default: float) -> float:
+    raw = _env(name)
+    if raw is None:
+        return default
+    return float(raw)
+
+
 @dataclass
 class EmbeddingConfig:
     """
@@ -183,4 +191,141 @@ class VectorStoreConfig:
             top_k=_env_int("VAANIX_VECTOR_TOP_K", 10),
             index_sample_size=sample_n,
             upsert_batch_size=_env_int("VAANIX_QDRANT_UPSERT_BATCH", 64),
+        )
+
+
+@dataclass
+class HybridConfig:
+    """RRF fusion of dense + BM25. k=60 is the standard Cormack constant."""
+
+    rrf_k: int = 60
+    candidate_k: int = 20
+    top_k: int = 10
+    bm25_k1: float = 1.5
+    bm25_b: float = 0.75
+    bm25_index_path: Path = field(default_factory=lambda: INDEX_DIR / "bm25.pkl")
+    parallel: bool = True
+
+    @classmethod
+    def from_env(cls) -> HybridConfig:
+        return cls(
+            rrf_k=_env_int("VAANIX_RRF_K", 60),
+            candidate_k=_env_int("VAANIX_HYBRID_CANDIDATE_K", 20),
+            top_k=_env_int("VAANIX_VECTOR_TOP_K", 10),
+            bm25_k1=float(_env("VAANIX_BM25_K1", "1.5") or 1.5),
+            bm25_b=float(_env("VAANIX_BM25_B", "0.75") or 0.75),
+            bm25_index_path=Path(_env("VAANIX_BM25_INDEX_PATH", str(INDEX_DIR / "bm25.pkl")) or str(INDEX_DIR / "bm25.pkl")),
+            parallel=_env_bool("VAANIX_HYBRID_PARALLEL", True),
+        )
+
+
+@dataclass
+class GenerationConfig:
+    """Evidence packing, LLM, and guardrail thresholds."""
+
+    max_evidence_chunks: int = 5
+    max_context_chars: int = 3500
+    duplicate_jaccard: float = 0.85
+    min_rrf_score: float = 0.012
+    min_query_overlap: float = 0.04
+    verify_token_overlap: float = 0.12
+    regenerate_on_fail: bool = True
+    llm_model: str = "gpt-4o-mini"
+    llm_base_url: str = "https://api.openai.com/v1"
+    llm_timeout_s: float = 30.0
+    llm_retries: int = 2
+    llm_api_key: str | None = None
+
+    @classmethod
+    def from_env(cls) -> GenerationConfig:
+        return cls(
+            max_evidence_chunks=_env_int("VAANIX_MAX_EVIDENCE_CHUNKS", 5),
+            max_context_chars=_env_int("VAANIX_MAX_CONTEXT_CHARS", 3500),
+            duplicate_jaccard=_env_float("VAANIX_EVIDENCE_DUP_JACCARD", 0.85),
+            min_rrf_score=_env_float("VAANIX_MIN_RRF_SCORE", 0.012),
+            min_query_overlap=_env_float("VAANIX_MIN_QUERY_OVERLAP", 0.04),
+            verify_token_overlap=_env_float("VAANIX_VERIFY_TOKEN_OVERLAP", 0.12),
+            regenerate_on_fail=_env_bool("VAANIX_REGENERATE_ON_FAIL", True),
+            llm_model=_env("VAANIX_LLM_MODEL", "gpt-4o-mini") or "gpt-4o-mini",
+            llm_base_url=_env("VAANIX_LLM_BASE_URL", "https://api.openai.com/v1") or "https://api.openai.com/v1",
+            llm_timeout_s=_env_float("VAANIX_LLM_TIMEOUT_S", 30.0),
+            llm_retries=_env_int("VAANIX_LLM_RETRIES", 2),
+            llm_api_key=_env("VAANIX_LLM_API_KEY") or _env("OPENAI_API_KEY"),
+        )
+
+
+RouteName = Literal["FAST", "ACCURATE", "DEEP"]
+
+
+@dataclass
+class RoutingConfig:
+    """Deterministic FAST / ACCURATE / DEEP thresholds. No LLM classifier."""
+
+    fast_max_tokens: int = 12
+    fast_max_chars: int = 90
+    fast_max_clauses: int = 1
+    accurate_max_tokens: int = 28
+    deep_min_tokens: int = 22
+    deep_min_clauses: int = 3
+    fast_top_k: int = 8
+    accurate_top_k: int = 10
+    deep_top_k: int = 10
+    fast_candidate_k: int = 16
+    accurate_candidate_k: int = 20
+    deep_candidate_k: int = 40
+    rerank_top_n: int = 12
+    deep_verify_token_overlap: float = 0.18
+    reranker_model: str = "cross-encoder/mmarco-mMiniLMv2-L12-H384-v1"
+    reranker_backend: str = "auto"
+    reranker_batch_size: int = 16
+    reranker_device: str = "auto"
+
+    @classmethod
+    def from_env(cls) -> RoutingConfig:
+        return cls(
+            fast_max_tokens=_env_int("VAANIX_ROUTE_FAST_MAX_TOKENS", 12),
+            fast_max_chars=_env_int("VAANIX_ROUTE_FAST_MAX_CHARS", 90),
+            fast_max_clauses=_env_int("VAANIX_ROUTE_FAST_MAX_CLAUSES", 1),
+            accurate_max_tokens=_env_int("VAANIX_ROUTE_ACCURATE_MAX_TOKENS", 28),
+            deep_min_tokens=_env_int("VAANIX_ROUTE_DEEP_MIN_TOKENS", 22),
+            deep_min_clauses=_env_int("VAANIX_ROUTE_DEEP_MIN_CLAUSES", 3),
+            fast_top_k=_env_int("VAANIX_ROUTE_FAST_TOP_K", 8),
+            accurate_top_k=_env_int("VAANIX_ROUTE_ACCURATE_TOP_K", 10),
+            deep_top_k=_env_int("VAANIX_ROUTE_DEEP_TOP_K", 10),
+            fast_candidate_k=_env_int("VAANIX_ROUTE_FAST_CANDIDATE_K", 16),
+            accurate_candidate_k=_env_int("VAANIX_ROUTE_ACCURATE_CANDIDATE_K", 20),
+            deep_candidate_k=_env_int("VAANIX_ROUTE_DEEP_CANDIDATE_K", 40),
+            rerank_top_n=_env_int("VAANIX_RERANK_TOP_N", 12),
+            deep_verify_token_overlap=_env_float("VAANIX_DEEP_VERIFY_TOKEN_OVERLAP", 0.18),
+            reranker_model=_env(
+                "VAANIX_RERANKER_MODEL",
+                "cross-encoder/mmarco-mMiniLMv2-L12-H384-v1",
+            )
+            or "cross-encoder/mmarco-mMiniLMv2-L12-H384-v1",
+            reranker_backend=_env("VAANIX_RERANKER_BACKEND", "auto") or "auto",
+            reranker_batch_size=_env_int("VAANIX_RERANKER_BATCH_SIZE", 16),
+            reranker_device=_env("VAANIX_RERANKER_DEVICE", "auto") or "auto",
+        )
+
+
+@dataclass
+class RerankPolicyConfig:
+    """Skip the cross-encoder when hybrid RRF is already decisive."""
+
+    min_top_rrf: float = 0.028
+    min_score_gap: float = 0.006
+    strong_rrf: float = 0.018
+    max_strong_for_confident: int = 2
+    deep_skip_min_rrf: float = 0.040
+    allow_fast_rerank: bool = False
+
+    @classmethod
+    def from_env(cls) -> RerankPolicyConfig:
+        return cls(
+            min_top_rrf=_env_float("VAANIX_RERANK_MIN_TOP_RRF", 0.028),
+            min_score_gap=_env_float("VAANIX_RERANK_MIN_SCORE_GAP", 0.006),
+            strong_rrf=_env_float("VAANIX_RERANK_STRONG_RRF", 0.018),
+            max_strong_for_confident=_env_int("VAANIX_RERANK_MAX_STRONG", 2),
+            deep_skip_min_rrf=_env_float("VAANIX_RERANK_DEEP_SKIP_MIN_RRF", 0.040),
+            allow_fast_rerank=_env_bool("VAANIX_RERANK_ALLOW_FAST", False),
         )

@@ -1,0 +1,183 @@
+{
+  "dataset": "ai4bharat/MSMARCO-XI",
+  "n_queries": 4,
+  "note": "hybrid_plus_rerank always reranks for comparison. latency_by_route_ms follows production policy (FAST rerank_ms=0). This clean split has only 10 queries; none classified DEEP.",
+  "reranker_backend": "cross_encoder",
+  "reranker_model": "cross-encoder/mmarco-mMiniLMv2-L12-H384-v1",
+  "route_distribution": {
+    "FAST": 2,
+    "ACCURATE": 2,
+    "DEEP": 0,
+    "FAST_pct": 50.0,
+    "ACCURATE_pct": 50.0,
+    "DEEP_pct": 0.0
+  },
+  "example_queries": {
+    "FAST": [
+      "कॉर्पोरेशन क्या है?",
+      "ईमानदारी या सच्चाई की परिभाषा"
+    ],
+    "ACCURATE": [
+      "रेचल कार्सन ने क्यों एक दायित्व बर्दाश्त करने के लिए लिखा",
+      "फ्रैंक गिफोर्ड ने कितनी महिलाओं से शादी की"
+    ],
+    "DEEP": []
+  },
+  "hybrid": {
+    "recall_at_5": 0.5,
+    "recall_at_10": 1.0,
+    "mrr": 0.3958,
+    "latency_ms": {
+      "p50": 5.193,
+      "mean": 2103.943
+    }
+  },
+  "hybrid_plus_rerank": {
+    "recall_at_5": 0.5,
+    "recall_at_10": 1.0,
+    "mrr": 0.2107,
+    "rerank_latency_ms": {
+      "p50": 81.669,
+      "mean": 204.898
+    }
+  },
+  "rerank_delta": {
+    "recall_at_5": 0.0,
+    "recall_at_10": 0.0,
+    "mrr": -0.1851
+  },
+  "latency_by_route_ms": {
+    "FAST": {
+      "query_analysis": {
+        "p50": 1.036,
+        "mean": 1.036
+      },
+      "retrieval": {
+        "p50": 4202.693,
+        "mean": 4202.693
+      },
+      "rerank": {
+        "p50": 0.0,
+        "mean": 0.0
+      },
+      "total": {
+        "p50": 4203.729,
+        "mean": 4203.729
+      }
+    },
+    "ACCURATE": {
+      "query_analysis": {
+        "p50": 0.486,
+        "mean": 0.486
+      },
+      "retrieval": {
+        "p50": 5.193,
+        "mean": 5.193
+      },
+      "rerank": {
+        "p50": 81.669,
+        "mean": 81.669
+      },
+      "total": {
+        "p50": 87.349,
+        "mean": 87.349
+      }
+    },
+    "DEEP": {
+      "query_analysis": {
+        "p50": null,
+        "mean": null
+      },
+      "retrieval": {
+        "p50": null,
+        "mean": null
+      },
+      "rerank": {
+        "p50": null,
+        "mean": null
+      },
+      "total": {
+        "p50": null,
+        "mean": null
+      }
+    }
+  },
+  "queries": [
+    {
+      "query_id": 1102432,
+      "query": "कॉर्पोरेशन क्या है?",
+      "route": "FAST",
+      "query_type": "factual",
+      "language": "hi",
+      "hybrid_recall_at_10": 1.0,
+      "rerank_recall_at_10": 1.0,
+      "hybrid_mrr": 1.0,
+      "rerank_mrr": 0.3333333333333333,
+      "latency_ms": {
+        "query_analysis_ms": 1.969,
+        "dense_ms": 8400.426,
+        "bm25_ms": 6.869,
+        "fusion_ms": 0.426,
+        "rerank_ms": 585.715,
+        "total_ms": 8405.365
+      }
+    },
+    {
+      "query_id": 1102431,
+      "query": "रेचल कार्सन ने क्यों एक दायित्व बर्दाश्त करने के लिए लिखा",
+      "route": "ACCURATE",
+      "query_type": "other",
+      "language": "hi",
+      "hybrid_recall_at_10": 1.0,
+      "rerank_recall_at_10": 1.0,
+      "hybrid_mrr": 0.16666666666666666,
+      "rerank_mrr": 0.16666666666666666,
+      "latency_ms": {
+        "query_analysis_ms": 0.884,
+        "dense_ms": 7.774,
+        "bm25_ms": 4.301,
+        "fusion_ms": 0.044,
+        "rerank_ms": 80.766,
+        "total_ms": 89.725
+      }
+    },
+    {
+      "query_id": 205107,
+      "query": "ईमानदारी या सच्चाई की परिभाषा",
+      "route": "FAST",
+      "query_type": "other",
+      "language": "hi",
+      "hybrid_recall_at_10": 1.0,
+      "rerank_recall_at_10": 1.0,
+      "hybrid_mrr": 0.25,
+      "rerank_mrr": 0.2,
+      "latency_ms": {
+        "query_analysis_ms": 0.104,
+        "dense_ms": 1.739,
+        "bm25_ms": 0.733,
+        "fusion_ms": 0.039,
+        "rerank_ms": 70.536,
+        "total_ms": 2.094
+      }
+    },
+    {
+      "query_id": 300122,
+      "query": "फ्रैंक गिफोर्ड ने कितनी महिलाओं से शादी की",
+      "route": "ACCURATE",
+      "query_type": "other",
+      "language": "hi",
+      "hybrid_recall_at_10": 1.0,
+      "rerank_recall_at_10": 1.0,
+      "hybrid_mrr": 0.16666666666666666,
+      "rerank_mrr": 0.14285714285714285,
+      "latency_ms": {
+        "query_analysis_ms": 0.089,
+        "dense_ms": 2.063,
+        "bm25_ms": 1.042,
+        "fusion_ms": 0.042,
+        "rerank_ms": 82.573,
+        "total_ms": 84.973
+      }
+    }
+  ]
+}

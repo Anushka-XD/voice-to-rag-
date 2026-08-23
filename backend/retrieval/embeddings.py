@@ -31,6 +31,19 @@ from backend.config import EmbeddingConfig
 
 logger = logging.getLogger(__name__)
 
+_ST_LOAD_COUNT = 0
+_EMBEDDER_SINGLETON: SentenceTransformerEmbedder | None = None
+
+
+def embedding_load_count() -> int:
+    return _ST_LOAD_COUNT
+
+
+def reset_embedder_singleton() -> None:
+    global _EMBEDDER_SINGLETON, _ST_LOAD_COUNT
+    _EMBEDDER_SINGLETON = None
+    _ST_LOAD_COUNT = 0
+
 
 class TextEmbedder(Protocol):
     model_name: str
@@ -69,7 +82,7 @@ class SqliteEmbeddingCache:
     def __init__(self, path: Path) -> None:
         path.parent.mkdir(parents=True, exist_ok=True)
         self.path = path
-        self._conn = sqlite3.connect(str(path))
+        self._conn = sqlite3.connect(str(path), check_same_thread=False)
         self._conn.execute(
             "CREATE TABLE IF NOT EXISTS embeddings (k TEXT PRIMARY KEY, dim INTEGER NOT NULL, vec BLOB NOT NULL)"
         )
@@ -124,8 +137,16 @@ class SentenceTransformerEmbedder:
             from sentence_transformers import SentenceTransformer
 
             logger.info("Loading embedding model %s on %s", self.model_name, self.device)
+            global _ST_LOAD_COUNT
+            _ST_LOAD_COUNT += 1
             self._model = SentenceTransformer(self.model_name, device=self.device)
         return self._model
+
+    def warmup(self) -> None:
+        """Load weights and run a tiny encode so the first user query is warm."""
+        _ = self.dimension
+        self.embed_query("warmup")
+        self.embed_documents(["warmup passage"])
 
     @property
     def dimension(self) -> int:
@@ -197,5 +218,21 @@ def _safe_model_slug(name: str) -> str:
     return "".join(ch if ch.isalnum() or ch in "-_." else "_" for ch in name)
 
 
-def create_embedder(config: EmbeddingConfig | None = None) -> SentenceTransformerEmbedder:
-    return SentenceTransformerEmbedder(config or EmbeddingConfig.from_env())
+def create_embedder(
+    config: EmbeddingConfig | None = None,
+    *,
+    singleton: bool = True,
+) -> SentenceTransformerEmbedder:
+    """Reuse one SentenceTransformer process-wide. Tests can pass singleton=False."""
+    global _EMBEDDER_SINGLETON
+    cfg = config or EmbeddingConfig.from_env()
+    if not singleton:
+        return SentenceTransformerEmbedder(cfg)
+    if (
+        _EMBEDDER_SINGLETON is not None
+        and _EMBEDDER_SINGLETON.model_name == cfg.model_name
+        and _EMBEDDER_SINGLETON.device == resolve_device(cfg.device)
+    ):
+        return _EMBEDDER_SINGLETON
+    _EMBEDDER_SINGLETON = SentenceTransformerEmbedder(cfg)
+    return _EMBEDDER_SINGLETON

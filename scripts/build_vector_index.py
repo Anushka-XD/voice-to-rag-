@@ -52,6 +52,8 @@ def main() -> int:
     emb_cfg = EmbeddingConfig.from_env()
     vs_cfg = VectorStoreConfig.from_env()
     sample = args.sample_size if args.sample_size is not None else vs_cfg.index_sample_size
+    if sample == 0:
+        sample = None
 
     if not args.from_jsonl.exists():
         logger.error("Missing %s — run scripts/ingest.py first.", args.from_jsonl)

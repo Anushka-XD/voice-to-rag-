@@ -1,0 +1,57 @@
+{
+  "n_queries": 112,
+  "policy": {
+    "min_top_rrf": 0.028,
+    "min_score_gap": 0.006,
+    "strong_rrf": 0.018,
+    "deep_skip_min_rrf": 0.04,
+    "allow_fast_rerank": false
+  },
+  "cold_start_ms": 24764.181,
+  "always": {
+    "strategy": "always",
+    "n_queries": 112,
+    "recall_at_5": 0.75,
+    "recall_at_10": 0.8839,
+    "mrr": 0.3759,
+    "latency_ms": {
+      "mean": 76.097,
+      "p50": 69.221,
+      "p70": 85.765,
+      "p100": 164.457
+    },
+    "pct_reranked": 100.0,
+    "n_reranked": 112
+  },
+  "never": {
+    "strategy": "never",
+    "n_queries": 112,
+    "recall_at_5": 0.8125,
+    "recall_at_10": 0.8839,
+    "mrr": 0.3879,
+    "latency_ms": {
+      "mean": 7.032,
+      "p50": 6.216,
+      "p70": 7.923,
+      "p100": 12.856
+    },
+    "pct_reranked": 0.0,
+    "n_reranked": 0
+  },
+  "adaptive": {
+    "strategy": "adaptive",
+    "n_queries": 112,
+    "recall_at_5": 0.7768,
+    "recall_at_10": 0.8839,
+    "mrr": 0.4252,
+    "latency_ms": {
+      "mean": 40.755,
+      "p50": 53.958,
+      "p70": 65.396,
+      "p100": 115.63
+    },
+    "pct_reranked": 50.0,
+    "n_reranked": 56
+  },
+  "note": "Quality/latency tradeoff. Do not assume rerank helps; compare MRR and p50. Latencies are warm (models loaded before the first scored query)."
+}
