@@ -1,0 +1,420 @@
+{
+  "n_queries": 20,
+  "llm_configured": false,
+  "stt": "not measured (text-only bench; Sarvam is used on POST /voice-query)",
+  "cold_start_ms": 20802.548,
+  "warm_probe_ms": 29.292,
+  "warmup_components_ms": {
+    "embedding_ms": 13592.349,
+    "qdrant_ms": 466.166,
+    "bm25_ms": 110.28,
+    "reranker_ms": 6632.63
+  },
+  "retrieval_ms": {
+    "mean": 7.129,
+    "p50": 6.532,
+    "p70": 7.172,
+    "p100": 13.707
+  },
+  "rerank_ms": {
+    "mean": 41.82,
+    "p50": 23.796,
+    "p70": 69.237,
+    "p100": 162.085
+  },
+  "generation_ms": {
+    "mean": 0.022,
+    "p50": 0.02,
+    "p70": 0.021,
+    "p100": 0.034
+  },
+  "total_ms": {
+    "mean": 49.595,
+    "p50": 31.483,
+    "p70": 76.798,
+    "p100": 173.875
+  },
+  "note": "Warm request latencies after process warmup. Cold-start is model load, not per query. generation_ms includes real LLM only if an API key is configured; otherwise it is the pipeline's refusal/error path. STT is not included in this text benchmark.",
+  "queries": [
+    {
+      "query": "কৰ্পোৰেচন কি?",
+      "status": "insufficient_context",
+      "route": "FAST",
+      "reranked": false,
+      "latency": {
+        "query_analysis_ms": 0.087,
+        "dense_ms": 4.694,
+        "bm25_ms": 4.004,
+        "fusion_ms": 0.042,
+        "rerank_ms": 0.0,
+        "evidence_ms": 0.19,
+        "generation_ms": 0.034,
+        "grounding_ms": 0.0,
+        "verification_ms": 0.0,
+        "retrieval_ms": 4.922,
+        "total_ms": 6.537
+      }
+    },
+    {
+      "query": "what is a corporation?",
+      "status": "insufficient_context",
+      "route": "FAST",
+      "reranked": false,
+      "latency": {
+        "query_analysis_ms": 0.046,
+        "dense_ms": 4.124,
+        "bm25_ms": 3.201,
+        "fusion_ms": 0.034,
+        "rerank_ms": 0.0,
+        "evidence_ms": 0.162,
+        "generation_ms": 0.032,
+        "grounding_ms": 0.0,
+        "verification_ms": 0.0,
+        "retrieval_ms": 4.353,
+        "total_ms": 5.222
+      }
+    },
+    {
+      "query": "ৰেচেল কাৰ্চনে কিয় এক বাধ্যবাধকতা সহ্য কৰিবলৈ লিখিছিল",
+      "status": "insufficient_context",
+      "route": "ACCURATE",
+      "reranked": true,
+      "latency": {
+        "query_analysis_ms": 0.058,
+        "dense_ms": 5.219,
+        "bm25_ms": 10.963,
+        "fusion_ms": 0.048,
+        "rerank_ms": 162.085,
+        "evidence_ms": 0.376,
+        "generation_ms": 0.021,
+        "grounding_ms": 0.0,
+        "verification_ms": 0.0,
+        "retrieval_ms": 11.268,
+        "total_ms": 173.875
+      }
+    },
+    {
+      "query": "why did rachel carson write an obligation to endure",
+      "status": "insufficient_context",
+      "route": "ACCURATE",
+      "reranked": true,
+      "latency": {
+        "query_analysis_ms": 0.063,
+        "dense_ms": 5.245,
+        "bm25_ms": 6.735,
+        "fusion_ms": 0.045,
+        "rerank_ms": 67.572,
+        "evidence_ms": 0.217,
+        "generation_ms": 0.033,
+        "grounding_ms": 0.0,
+        "verification_ms": 0.0,
+        "retrieval_ms": 7.118,
+        "total_ms": 75.412
+      }
+    },
+    {
+      "query": "সততা বা সততার সংজ্ঞা",
+      "status": "insufficient_context",
+      "route": "FAST",
+      "reranked": false,
+      "latency": {
+        "query_analysis_ms": 0.045,
+        "dense_ms": 6.97,
+        "bm25_ms": 5.426,
+        "fusion_ms": 0.034,
+        "rerank_ms": 0.0,
+        "evidence_ms": 0.222,
+        "generation_ms": 0.017,
+        "grounding_ms": 0.0,
+        "verification_ms": 0.0,
+        "retrieval_ms": 7.299,
+        "total_ms": 7.792
+      }
+    },
+    {
+      "query": "honesty or integrity definition",
+      "status": "insufficient_context",
+      "route": "FAST",
+      "reranked": false,
+      "latency": {
+        "query_analysis_ms": 0.041,
+        "dense_ms": 4.822,
+        "bm25_ms": 3.283,
+        "fusion_ms": 0.033,
+        "rerank_ms": 0.0,
+        "evidence_ms": 0.118,
+        "generation_ms": 0.021,
+        "grounding_ms": 0.0,
+        "verification_ms": 0.0,
+        "retrieval_ms": 5.101,
+        "total_ms": 5.432
+      }
+    },
+    {
+      "query": "ফ্ৰেংক গিফৰ্ডে কিমানগৰাকী মহিলাক বিয়া কৰাইছিল",
+      "status": "insufficient_context",
+      "route": "ACCURATE",
+      "reranked": true,
+      "latency": {
+        "query_analysis_ms": 0.05,
+        "dense_ms": 8.413,
+        "bm25_ms": 11.12,
+        "fusion_ms": 0.047,
+        "rerank_ms": 128.993,
+        "evidence_ms": 0.364,
+        "generation_ms": 0.022,
+        "grounding_ms": 0.0,
+        "verification_ms": 0.0,
+        "retrieval_ms": 11.456,
+        "total_ms": 140.946
+      }
+    },
+    {
+      "query": "how many women did frank gifford marry",
+      "status": "insufficient_context",
+      "route": "ACCURATE",
+      "reranked": true,
+      "latency": {
+        "query_analysis_ms": 0.059,
+        "dense_ms": 5.294,
+        "bm25_ms": 5.982,
+        "fusion_ms": 0.044,
+        "rerank_ms": 73.122,
+        "evidence_ms": 0.218,
+        "generation_ms": 0.018,
+        "grounding_ms": 0.0,
+        "verification_ms": 0.0,
+        "retrieval_ms": 6.364,
+        "total_ms": 80.031
+      }
+    },
+    {
+      "query": "কর্পোরেশন কী?",
+      "status": "insufficient_context",
+      "route": "FAST",
+      "reranked": false,
+      "latency": {
+        "query_analysis_ms": 0.032,
+        "dense_ms": 5.466,
+        "bm25_ms": 4.551,
+        "fusion_ms": 0.038,
+        "rerank_ms": 0.0,
+        "evidence_ms": 0.273,
+        "generation_ms": 0.016,
+        "grounding_ms": 0.0,
+        "verification_ms": 0.0,
+        "retrieval_ms": 5.743,
+        "total_ms": 6.312
+      }
+    },
+    {
+      "query": "what is a corporation?",
+      "status": "insufficient_context",
+      "route": "FAST",
+      "reranked": false,
+      "latency": {
+        "query_analysis_ms": 0.037,
+        "dense_ms": 4.15,
+        "bm25_ms": 3.304,
+        "fusion_ms": 0.051,
+        "rerank_ms": 0.0,
+        "evidence_ms": 0.168,
+        "generation_ms": 0.017,
+        "grounding_ms": 0.0,
+        "verification_ms": 0.0,
+        "retrieval_ms": 4.462,
+        "total_ms": 4.873
+      }
+    },
+    {
+      "query": "র‍্যাচেল কারসন কেন একটি বাধ্যবাধকতা সহ্য করার জন্য লিখেছিলেন",
+      "status": "insufficient_context",
+      "route": "ACCURATE",
+      "reranked": true,
+      "latency": {
+        "query_analysis_ms": 0.066,
+        "dense_ms": 7.903,
+        "bm25_ms": 13.368,
+        "fusion_ms": 0.043,
+        "rerank_ms": 92.201,
+        "evidence_ms": 0.485,
+        "generation_ms": 0.033,
+        "grounding_ms": 0.0,
+        "verification_ms": 0.0,
+        "retrieval_ms": 13.707,
+        "total_ms": 106.882
+      }
+    },
+    {
+      "query": "why did rachel carson write an obligation to endure",
+      "status": "insufficient_context",
+      "route": "ACCURATE",
+      "reranked": true,
+      "latency": {
+        "query_analysis_ms": 0.076,
+        "dense_ms": 5.573,
+        "bm25_ms": 6.582,
+        "fusion_ms": 0.048,
+        "rerank_ms": 47.591,
+        "evidence_ms": 0.202,
+        "generation_ms": 0.021,
+        "grounding_ms": 0.0,
+        "verification_ms": 0.0,
+        "retrieval_ms": 7.024,
+        "total_ms": 55.173
+      }
+    },
+    {
+      "query": "সততা বা সততার সংজ্ঞা",
+      "status": "insufficient_context",
+      "route": "FAST",
+      "reranked": false,
+      "latency": {
+        "query_analysis_ms": 0.04,
+        "dense_ms": 5.01,
+        "bm25_ms": 5.633,
+        "fusion_ms": 0.035,
+        "rerank_ms": 0.0,
+        "evidence_ms": 0.246,
+        "generation_ms": 0.016,
+        "grounding_ms": 0.0,
+        "verification_ms": 0.0,
+        "retrieval_ms": 5.986,
+        "total_ms": 6.524
+      }
+    },
+    {
+      "query": "honesty or integrity definition",
+      "status": "insufficient_context",
+      "route": "FAST",
+      "reranked": false,
+      "latency": {
+        "query_analysis_ms": 0.043,
+        "dense_ms": 4.117,
+        "bm25_ms": 3.509,
+        "fusion_ms": 0.032,
+        "rerank_ms": 0.0,
+        "evidence_ms": 0.138,
+        "generation_ms": 0.017,
+        "grounding_ms": 0.0,
+        "verification_ms": 0.0,
+        "retrieval_ms": 4.348,
+        "total_ms": 4.705
+      }
+    },
+    {
+      "query": "ফ্র্যাঙ্ক গিফোর্ড কতজন মহিলাকে বিয়ে করেছিলেন",
+      "status": "insufficient_context",
+      "route": "ACCURATE",
+      "reranked": true,
+      "latency": {
+        "query_analysis_ms": 0.056,
+        "dense_ms": 5.016,
+        "bm25_ms": 9.793,
+        "fusion_ms": 0.041,
+        "rerank_ms": 79.062,
+        "evidence_ms": 0.38,
+        "generation_ms": 0.02,
+        "grounding_ms": 0.0,
+        "verification_ms": 0.0,
+        "retrieval_ms": 10.313,
+        "total_ms": 90.281
+      }
+    },
+    {
+      "query": "how many women did frank gifford marry",
+      "status": "insufficient_context",
+      "route": "ACCURATE",
+      "reranked": true,
+      "latency": {
+        "query_analysis_ms": 0.059,
+        "dense_ms": 4.709,
+        "bm25_ms": 5.679,
+        "fusion_ms": 0.046,
+        "rerank_ms": 58.84,
+        "evidence_ms": 0.247,
+        "generation_ms": 0.022,
+        "grounding_ms": 0.0,
+        "verification_ms": 0.0,
+        "retrieval_ms": 6.079,
+        "total_ms": 65.515
+      }
+    },
+    {
+      "query": ". શું એક કોર્પોરેશન છે?",
+      "status": "insufficient_context",
+      "route": "FAST",
+      "reranked": false,
+      "latency": {
+        "query_analysis_ms": 0.104,
+        "dense_ms": 5.086,
+        "bm25_ms": 6.553,
+        "fusion_ms": 0.042,
+        "rerank_ms": 0.0,
+        "evidence_ms": 0.208,
+        "generation_ms": 0.016,
+        "grounding_ms": 0.0,
+        "verification_ms": 0.0,
+        "retrieval_ms": 6.933,
+        "total_ms": 7.521
+      }
+    },
+    {
+      "query": "what is a corporation?",
+      "status": "insufficient_context",
+      "route": "FAST",
+      "reranked": false,
+      "latency": {
+        "query_analysis_ms": 0.037,
+        "dense_ms": 4.295,
+        "bm25_ms": 3.241,
+        "fusion_ms": 0.042,
+        "rerank_ms": 0.0,
+        "evidence_ms": 0.187,
+        "generation_ms": 0.02,
+        "grounding_ms": 0.0,
+        "verification_ms": 0.0,
+        "retrieval_ms": 4.585,
+        "total_ms": 5.062
+      }
+    },
+    {
+      "query": "રશેલ કાર્સને શા માટે સહન કરવાની જવાબદારી લખી?",
+      "status": "insufficient_context",
+      "route": "ACCURATE",
+      "reranked": true,
+      "latency": {
+        "query_analysis_ms": 0.059,
+        "dense_ms": 5.616,
+        "bm25_ms": 8.515,
+        "fusion_ms": 0.043,
+        "rerank_ms": 78.321,
+        "evidence_ms": 0.329,
+        "generation_ms": 0.019,
+        "grounding_ms": 0.0,
+        "verification_ms": 0.0,
+        "retrieval_ms": 8.815,
+        "total_ms": 87.938
+      }
+    },
+    {
+      "query": "why did rachel carson write an obligation to endure",
+      "status": "insufficient_context",
+      "route": "ACCURATE",
+      "reranked": true,
+      "latency": {
+        "query_analysis_ms": 0.066,
+        "dense_ms": 4.904,
+        "bm25_ms": 6.325,
+        "fusion_ms": 0.041,
+        "rerank_ms": 48.616,
+        "evidence_ms": 0.206,
+        "generation_ms": 0.02,
+        "grounding_ms": 0.0,
+        "verification_ms": 0.0,
+        "retrieval_ms": 6.701,
+        "total_ms": 55.874
+      }
+    }
+  ]
+}

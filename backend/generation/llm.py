@@ -142,6 +142,9 @@ class OpenAICompatClient:
             except TimeoutError as exc:
                 last_err = LLMError("LLM timeout")
                 last_err.__cause__ = exc
+            except urllib.error.HTTPError as exc:
+                last_err = LLMError(f"LLM API failure: HTTP {exc.code}")
+                last_err.__cause__ = exc
             except urllib.error.URLError as exc:
                 reason = str(exc.reason) if getattr(exc, "reason", None) else str(exc)
                 if "timed out" in reason.lower():

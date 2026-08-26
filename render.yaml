@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: vaanix
+    runtime: python
+    plan: starter
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn backend.api.app:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: VAANIX_SKIP_WARMUP
+        value: "false"
+      - key: VAANIX_CORS_ORIGINS
+        value: "*"
+      - key: PYTHONUNBUFFERED
+        value: "1"

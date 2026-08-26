@@ -8,6 +8,13 @@ from pathlib import Path
 from typing import Literal
 
 ROOT = Path(__file__).resolve().parents[1]
+
+try:
+    from dotenv import load_dotenv
+
+    load_dotenv(ROOT / ".env")
+except ImportError:
+    pass
 DATA_DIR = ROOT / "data"
 REPORTS_DIR = DATA_DIR / "reports"
 CLEAN_DIR = DATA_DIR / "clean"
@@ -328,4 +335,28 @@ class RerankPolicyConfig:
             max_strong_for_confident=_env_int("VAANIX_RERANK_MAX_STRONG", 2),
             deep_skip_min_rrf=_env_float("VAANIX_RERANK_DEEP_SKIP_MIN_RRF", 0.040),
             allow_fast_rerank=_env_bool("VAANIX_RERANK_ALLOW_FAST", False),
+        )
+
+
+@dataclass
+class AppConfig:
+    cors_origins: str = "*"
+    skip_warmup: bool = False
+    sarvam_api_key: str | None = None
+    sarvam_stt_url: str = "https://api.sarvam.ai/speech-to-text"
+    sarvam_stt_model: str = "saaras:v3"
+    sarvam_stt_mode: str = "transcribe"
+    sarvam_timeout_s: float = 45.0
+
+    @classmethod
+    def from_env(cls) -> AppConfig:
+        return cls(
+            cors_origins=_env("VAANIX_CORS_ORIGINS", "*") or "*",
+            skip_warmup=_env_bool("VAANIX_SKIP_WARMUP", False),
+            sarvam_api_key=_env("SARVAM_API_KEY") or _env("VAANIX_SARVAM_API_KEY"),
+            sarvam_stt_url=_env("VAANIX_SARVAM_STT_URL", "https://api.sarvam.ai/speech-to-text")
+            or "https://api.sarvam.ai/speech-to-text",
+            sarvam_stt_model=_env("VAANIX_SARVAM_STT_MODEL", "saaras:v3") or "saaras:v3",
+            sarvam_stt_mode=_env("VAANIX_SARVAM_STT_MODE", "transcribe") or "transcribe",
+            sarvam_timeout_s=_env_float("VAANIX_SARVAM_TIMEOUT_S", 45.0),
         )
